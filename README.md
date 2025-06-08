@@ -2,6 +2,8 @@
 
 A collection of reusable Claude Code commands for the Comfy-Org team to streamline development workflows.
 
+> **💡 Looking for more commands?** Check out [Awesome Claude Code](https://github.com/hesreallyhim/awesome-claude-code) - a community collection of general-purpose Claude Code commands!
+
 ## Quick Start
 
 Commands are stored in `.claude/commands/` and can be invoked using `/project:command-name` or `/user:command-name`.
