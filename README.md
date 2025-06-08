@@ -87,20 +87,40 @@ Create a GitHub issue or feature request. Reference the repo name at least once 
 
 Enhance GitHub issue descriptions with better formatting and clarity.
 
+**Usage**
+```
+/user:GH-ISSUE-enhance-issue-description "https://github.com/Comfy-Org/ComfyUI_frontend/issues/123"
+```
+
 #### add-review-comments-to-pr
 [GH-PR-add-review-comments-to-pr.md](.claude/commands/github/GH-PR-add-review-comments-to-pr.md)
 
 Add review comments to a pull request.
+
+**Usage**
+```
+/user:GH-PR-add-review-comments-to-pr "https://github.com/Comfy-Org/ComfyUI_frontend/pull/456"
+```
 
 #### analyze-pr-status
 [GH-PR-analyze-status.md](.claude/commands/github/GH-PR-analyze-status.md)
 
 Analyze the status of a pull request including checks, reviews, and conflicts.
 
+**Usage**
+```
+/user:GH-PR-analyze-status
+```
+
 #### summarize-recent-prs
 [GH-summarize-my-recent-prs.md](.claude/commands/github/GH-summarize-my-recent-prs.md)
 
 Summarize your recent pull requests across repositories.
+
+**Usage**
+```
+/user:GH-summarize-my-recent-prs
+```
 
 ### Research Commands
 
@@ -119,12 +139,22 @@ Read a pre-generated architecture overview for Comfy-Org/comfy-api in order to p
 
 Study and analyze the current repository structure and architecture.
 
+**Usage**
+```
+/user:STUDY-current-repo
+```
+
 ### Analysis Commands
 
 #### analyze-repo-for-claude
 [ANALYZE-repo-for-claude.md](.claude/commands/analysis/ANALYZE-repo-for-claude.md)
 
 Analyze a repository to provide Claude with necessary context and understanding.
+
+**Usage**
+```
+/user:ANALYZE-repo-for-claude
+```
 
 ### Notion Commands
 
@@ -133,10 +163,20 @@ Analyze a repository to provide Claude with necessary context and understanding.
 
 Audit and update team task views in Notion.
 
+**Usage**
+```
+/user:NOTION-TASKS-audit-task-view
+```
+
 #### convert-to-bounty-task
 [NOTION-convert-to-bounty-task.md](.claude/commands/notion/NOTION-convert-to-bounty-task.md)
 
 Convert Notion tasks to bounty format for external contributors.
+
+**Usage**
+```
+/user:NOTION-convert-to-bounty-task "https://notion.so/task-url"
+```
 
 ### Team Commands
 
@@ -144,6 +184,11 @@ Convert Notion tasks to bounty format for external contributors.
 [TEAM-team-standup-analysis.md](.claude/commands/team/TEAM-team-standup-analysis.md)
 
 Analyze team standup notes and provide insights.
+
+**Usage**
+```
+/user:TEAM-team-standup-analysis
+```
 
 ## Installation
 
