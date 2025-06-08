@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(gh issue list:*)"
+    ],
+    "deny": []
+  }
+}
