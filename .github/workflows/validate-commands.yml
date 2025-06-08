@@ -1,0 +1,76 @@
+name: Validate Commands
+
+on:
+  push:
+    paths:
+      - '.claude/commands/**/*.md'
+  pull_request:
+    paths:
+      - '.claude/commands/**/*.md'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Validate command files
+      run: |
+        echo "🔍 Validating Claude Code commands..."
+        
+        COMMANDS_DIR=".claude/commands"
+        ERRORS=0
+        
+        # Check if commands directory exists
+        if [ ! -d "$COMMANDS_DIR" ]; then
+            echo "❌ Commands directory not found: $COMMANDS_DIR"
+            exit 1
+        fi
+        
+        # Find all .md files in commands directory
+        while IFS= read -r file; do
+            echo "📄 Checking: $file"
+            
+            # Check if file is empty
+            if [ ! -s "$file" ]; then
+                echo "  ❌ File is empty"
+                ((ERRORS++))
+                continue
+            fi
+            
+            # Check for proper markdown structure
+            if ! head -1 "$file" | grep -q "^# "; then
+                echo "  ⚠️  Missing H1 title"
+                ((ERRORS++))
+            fi
+            
+            # Check for $ARGUMENTS usage (if present, should be properly formatted)
+            if grep -q '\$ARGUMENTS' "$file"; then
+                echo "  ✅ Uses \$ARGUMENTS parameter"
+            fi
+            
+            # Check for basic markdown syntax issues
+            if grep -q '^#[^# ]' "$file"; then
+                echo "  ⚠️  Potential heading formatting issue (missing space after #)"
+                ((ERRORS++))
+            fi
+            
+            # Check file naming convention
+            basename_file=$(basename "$file" .md)
+            if [[ ! "$basename_file" =~ ^[A-Z]+(-[a-z0-9-]+)*$ ]] && [[ ! "$basename_file" =~ ^[a-z]+(-[a-z0-9-]+)*$ ]]; then
+                echo "  ⚠️  Non-standard filename format: $basename_file"
+            fi
+            
+            echo "  ✅ Basic validation passed"
+        done < <(find "$COMMANDS_DIR" -name "*.md" -type f)
+        
+        if [ $ERRORS -eq 0 ]; then
+            echo "✅ All commands validated successfully!"
+            exit 0
+        else
+            echo "❌ Found $ERRORS errors"
+            exit 1
+        fi
