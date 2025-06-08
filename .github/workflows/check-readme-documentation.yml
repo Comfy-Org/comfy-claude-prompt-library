@@ -1,0 +1,85 @@
+name: Check README Documentation
+
+on:
+  pull_request:
+    paths:
+      - '.claude/commands/**/*.md'
+      - 'README.md'
+
+jobs:
+  check-documentation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Check for new commands without README documentation
+      run: |
+        echo "🔍 Checking if new commands are documented in README..."
+        
+        # Get the base branch (usually master/main)
+        BASE_BRANCH="${{ github.base_ref }}"
+        
+        # Find new command files added in this PR
+        NEW_COMMANDS=$(git diff --name-status origin/$BASE_BRANCH..HEAD | grep '^A' | grep '\.claude/commands/.*\.md$' | awk '{print $2}')
+        
+        if [ -z "$NEW_COMMANDS" ]; then
+            echo "✅ No new command files detected in this PR"
+            exit 0
+        fi
+        
+        echo "📝 New command files detected:"
+        echo "$NEW_COMMANDS"
+        
+        # Check if README.md was modified
+        README_MODIFIED=$(git diff --name-only origin/$BASE_BRANCH..HEAD | grep '^README\.md$' || true)
+        
+        if [ -z "$README_MODIFIED" ]; then
+            echo "❌ New command files were added but README.md was not updated!"
+            echo ""
+            echo "Please update README.md to include documentation for the new commands:"
+            echo "$NEW_COMMANDS"
+            echo ""
+            echo "Each new command should have:"
+            echo "- A descriptive section with the command name"
+            echo "- A link to the command file"
+            echo "- A brief description of what the command does"
+            echo "- A usage example showing how to invoke the command"
+            echo ""
+            echo "Example format:"
+            echo "#### command-name"
+            echo "[command-file.md](.claude/commands/category/command-file.md)"
+            echo ""
+            echo "Brief description of what this command does."
+            echo ""
+            echo "**Usage**"
+            echo "\`\`\`"
+            echo "/user:command-file \"arguments if needed\""
+            echo "\`\`\`"
+            exit 1
+        fi
+        
+        # Check if the new commands are actually referenced in the README
+        MISSING_DOCS=""
+        for cmd_file in $NEW_COMMANDS; do
+            # Extract just the filename without path and extension
+            cmd_basename=$(basename "$cmd_file" .md)
+            
+            # Check if this command is referenced in the README
+            if ! grep -q "$cmd_basename" README.md; then
+                MISSING_DOCS="$MISSING_DOCS\n- $cmd_file (command: $cmd_basename)"
+            fi
+        done
+        
+        if [ ! -z "$MISSING_DOCS" ]; then
+            echo "❌ README.md was updated, but some new commands are not documented:"
+            echo -e "$MISSING_DOCS"
+            echo ""
+            echo "Please add documentation sections for these commands in README.md"
+            exit 1
+        fi
+        
+        echo "✅ All new commands are properly documented in README.md"
