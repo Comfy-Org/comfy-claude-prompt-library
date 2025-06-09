@@ -47,6 +47,10 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 
 - [`/user:TEAM-team-standup-analysis`](.claude/commands/team/TEAM-team-standup-analysis.md) - Analyze team standup notes and provide insights
 
+### ComfyUI Frontend Commands
+
+- [`/user:frontend/FE-generate-primevue-reference`](.claude/commands/frontend/FE-generate-primevue-reference.md) - Generate a list of all available PrimeVue components and their properties, for help with building frontend UIs
+
 ## Installation
 
 1. Clone this repository
