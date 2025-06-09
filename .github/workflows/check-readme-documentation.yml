@@ -43,22 +43,12 @@ jobs:
             echo "Please update README.md to include documentation for the new commands:"
             echo "$NEW_COMMANDS"
             echo ""
-            echo "Each new command should have:"
-            echo "- A descriptive section with the command name"
-            echo "- A link to the command file"
+            echo "Add each new command as a bullet point in the appropriate section with:"
+            echo "- A link to the command file using the format [\`/user:command-name\`](path/to/file.md)"
             echo "- A brief description of what the command does"
-            echo "- A usage example showing how to invoke the command"
             echo ""
-            echo "Example format:"
-            echo "#### command-name"
-            echo "[command-file.md](.claude/commands/category/command-file.md)"
-            echo ""
-            echo "Brief description of what this command does."
-            echo ""
-            echo "**Usage**"
-            echo "\`\`\`"
-            echo "/user:command-file \"arguments if needed\""
-            echo "\`\`\`"
+            echo "Example:"
+            echo "- [\`/user:my-command\`](.claude/commands/category/my-command.md) - Brief description of the command"
             exit 1
         fi
         
@@ -75,10 +65,10 @@ jobs:
         done
         
         if [ ! -z "$MISSING_DOCS" ]; then
-            echo "❌ README.md was updated, but some new commands are not documented:"
+            echo "❌ README.md was updated, but some new commands are not referenced:"
             echo -e "$MISSING_DOCS"
             echo ""
-            echo "Please add documentation sections for these commands in README.md"
+            echo "Please add bullet points for these commands in the appropriate README.md section"
             exit 1
         fi
         
