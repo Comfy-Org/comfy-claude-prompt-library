@@ -24,7 +24,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:GH-create-github-issue`](.claude/commands/github/GH-create-github-issue.md) - Create a GitHub issue or feature request. Reference the repo name at least once in the argument
 - [`/user:GH-ISSUE-enhance-issue-description`](.claude/commands/github/GH-ISSUE-enhance-issue-description.md) - Enhance GitHub issue descriptions with better formatting and clarity
 - [`/user:GH-PR-add-review-comments-to-pr`](.claude/commands/github/GH-PR-add-review-comments-to-pr.md) - Add review comments to a pull request
-- [`/user:GH-PR-analyze-status`](.claude/commands/github/GH-PR-analyze-status.md) - Analyze the status of a pull request including checks, reviews, and conflicts
+- [`/user:GH-PR-summarize-my-open-prs`](.claude/commands/github/GH-PR-summarize-my-open-prs.md) - Summarize the status of all open pull requests for the current user
 - [`/user:GH-summarize-my-recent-prs`](.claude/commands/github/GH-summarize-my-recent-prs.md) - Summarize your recent pull requests across repositories
 - [`/user:GH-daily-report`](.claude/commands/github/GH-daily-report.md) - Create a daily summary of GitHub issues and PRs for comfy-org repos
 

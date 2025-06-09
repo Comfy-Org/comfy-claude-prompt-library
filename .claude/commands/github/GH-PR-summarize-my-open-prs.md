@@ -8,11 +8,17 @@ Follow these steps systematically:
 
 ### 1. Data Collection Phase
 
-First, gather comprehensive PR data:
+First, determine my github username using the gh cli:
 
 ```bash
-# Get all open PRs by christian-byrne from the last 3 months
-gh search prs --author=christian-byrne --state=open --created=">=`date -d '3 months ago' '+%Y-%m-%d'`" --json url,title,repository,number,createdAt,updatedAt,headRefName,baseRefName,mergeable,reviewDecision,assignees,labels,milestone --limit 100
+gh api user
+```
+
+then, gather comprehensive PR data:
+
+```bash
+# Get all open PRs by my github username from the last 3 months
+gh search prs --author=my-github-username --state=open --created=">=`date -d '3 months ago' '+%Y-%m-%d'`" --json url,title,repository,number,createdAt,updatedAt,headRefName,baseRefName,mergeable,reviewDecision,assignees,labels,milestone --limit 100
 ```
 
 For each PR found:
