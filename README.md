@@ -27,6 +27,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:GH-PR-summarize-my-open-prs`](.claude/commands/github/GH-PR-summarize-my-open-prs.md) - Summarize the status of all open pull requests for the current user
 - [`/user:GH-summarize-my-recent-prs`](.claude/commands/github/GH-summarize-my-recent-prs.md) - Summarize your recent pull requests across repositories
 - [`/user:GH-daily-report`](.claude/commands/github/GH-daily-report.md) - Create a daily summary of GitHub issues and PRs for comfy-org repos
+- [`/user:GH-rebase-onto`](.claude/commands/github/GH-rebase-onto.md) - Rebase the current branch onto the target branch, handling conflicts safely human-in-the-loop style
 
 ### Research Commands
 
