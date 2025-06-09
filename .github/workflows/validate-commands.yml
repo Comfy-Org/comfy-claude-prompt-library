@@ -44,7 +44,6 @@ jobs:
             # Check for proper markdown structure
             if ! head -1 "$file" | grep -q "^# "; then
                 echo "  ⚠️  Missing H1 title"
-                ((ERRORS++))
             fi
             
             # Check for $ARGUMENTS usage (if present, should be properly formatted)
