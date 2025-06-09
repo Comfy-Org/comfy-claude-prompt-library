@@ -4,7 +4,8 @@ Your task is to create a comprehensive repository analysis guide optimized for C
 
 ## Storage System
 
-All repository summaries are stored in `~/project-summaries-for-agents/`:
+All repository summaries are stored in `project-summaries-for-agents/` (try to find in cwd, home dir, then using fs search):
+- If you cannot find the project-summaries-for-agents folder, inform the user they need to make the folder, update this command file, and run the ANALYZE-repo-for-claude command first
 - `filepath-mapping.json`: Maps repository file paths to summary folder names
 - Individual folders contain the actual summary files for each repository
 
