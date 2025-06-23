@@ -25,8 +25,6 @@ This command will:
 First, create a temporary script to generate the component reference:
 
 ```javascript
-#!/usr/bin/env node
-
 /**
  * Comprehensive PrimeVue Component Reference Generator
  * Scans node_modules/primevue and generates complete documentation

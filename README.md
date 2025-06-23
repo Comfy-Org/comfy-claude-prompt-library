@@ -32,6 +32,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 ### Research Commands
 
 - [`/user:STUDY-comfy-api-architecture`](.claude/commands/research/STUDY-comfy-api-architecture.md) - Load pre-generated architecture overview for Comfy-Org/comfy-api
+- [`/user:STUDY-comfyui-custom-nodes-ecosystem`](.claude/commands/research/STUDY-comfyui-custom-nodes-ecosystem.md) - Analyze ComfyUI custom nodes ecosystem patterns and trends using comprehensive dataset
 - [`/user:STUDY-current-repo`](.claude/commands/research/STUDY-current-repo.md) - Study and analyze current repository structure and architecture
 
 ### Analysis Commands
