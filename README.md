@@ -52,6 +52,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 ### ComfyUI Frontend Commands
 
 - [`/user:frontend/FE-generate-primevue-reference`](.claude/commands/frontend/FE-generate-primevue-reference.md) - Generate a list of all available PrimeVue components and their properties, for help with building frontend UIs
+- [`/user:frontend/FE-manually-publish-to-pypi`](.claude/commands/frontend/FE-manually-publish-to-pypi.md) - Publish the ComfyUI frontend package to PyPI with specified version
 
 ## Installation
 
