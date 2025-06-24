@@ -1,0 +1,1 @@
+- When submitting PRs on this repo, check the CI workflows in .github/workflows/ and make sure they will pass before submitting the PR.
