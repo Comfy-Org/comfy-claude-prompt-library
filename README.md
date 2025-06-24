@@ -15,6 +15,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:AGENT-create-command`](.claude/commands/agents/AGENT-create-command.md) - Create a command by providing a task description and automatically generate an optimal prompt file
 - [`/user:AGENT-improve-command`](.claude/commands/agents/AGENT-improve-command.md) - Improve an existing command by referencing Claude/Anthropic documentation materials
 - [`/user:AGENT-playbook-to-automated-agent-workflow`](.claude/commands/agents/AGENT-playbook-to-automated-agent-workflow.md) - Convert playbooks/workflows to automated agent workflows using local files and MCP tools
+- [`/user:AGENT-summarize-and-log-current-session`](.claude/commands/agents/AGENT-summarize-and-log-current-session.md) - Create ultra-compact summaries of conversations and save them with timestamp-based filenames
 
 ### GitHub/Git Commands
 
