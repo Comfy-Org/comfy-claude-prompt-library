@@ -1,0 +1,2180 @@
+[
+  {
+    "componentName": "Button",
+    "description": "Button is an extension to standard button element with icons and theming.",
+    "props": [
+      {
+        "name": "style",
+        "type": "any",
+        "default": "undefined",
+        "description": "Inline style of the button."
+      },
+      {
+        "name": "class",
+        "type": "any",
+        "default": "undefined",
+        "description": "Style class of the button."
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Text of the button."
+      },
+      {
+        "name": "icon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Name of the icon."
+      },
+      {
+        "name": "iconPos",
+        "type": "'left' | 'right' | 'top' | 'bottom' | undefined",
+        "default": "left",
+        "description": "Position of the icon."
+      },
+      {
+        "name": "iconClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the icon."
+      },
+      {
+        "name": "badge",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Value of the badge."
+      },
+      {
+        "name": "badgeClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the badge."
+      },
+      {
+        "name": "badgeSeverity",
+        "type": "HintedString<'secondary' | 'info' | 'success' | 'warn' | 'danger' | 'contrast'> | null | undefined",
+        "default": "undefined",
+        "description": "Severity type of the badge."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether the button is in loading state."
+      },
+      {
+        "name": "loadingIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in loading state."
+      },
+      {
+        "name": "as",
+        "type": "string | Component | undefined",
+        "default": "BUTTON",
+        "description": "Use to change the HTML tag of root element."
+      },
+      {
+        "name": "asChild",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, it changes the default rendered element for the one passed as a child element."
+      },
+      {
+        "name": "link",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Add a link style to the button."
+      },
+      {
+        "name": "severity",
+        "type": "HintedString<'secondary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast'> | undefined",
+        "default": "undefined",
+        "description": "Defines the style of the button."
+      },
+      {
+        "name": "raised",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Add a shadow to indicate elevation."
+      },
+      {
+        "name": "rounded",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Add a circular border radius to the button."
+      },
+      {
+        "name": "text",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Add a textual class to the button without a background initially."
+      },
+      {
+        "name": "outlined",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Add a border class without a background initially."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the button."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'text' | 'link' | undefined",
+        "default": "undefined",
+        "description": "Specifies the variant of the component."
+      },
+      {
+        "name": "plain",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Add a plain textual class to the button without a background initially.  [DEPRECATED] since v4.2.0. Use a contrast severity instead."
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "default": "null",
+        "description": "Spans 100% width of the container when enabled."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/button/index.d.ts"
+  },
+  {
+    "componentName": "InputNumber",
+    "description": "InputNumber is an input component to provide numerical input.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "Nullable<number>",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "Nullable<number>",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "format",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Whether to format the value."
+      },
+      {
+        "name": "showButtons",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Displays spinner buttons."
+      },
+      {
+        "name": "buttonLayout",
+        "type": "'stacked' | 'horizontal' | 'vertical' | undefined",
+        "default": "stacked",
+        "description": "Layout of the buttons."
+      },
+      {
+        "name": "incrementButtonClass",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Style class of the increment button."
+      },
+      {
+        "name": "decrementButtonClass",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Style class of the decrement button."
+      },
+      {
+        "name": "incrementButtonIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Style class of the increment icon.  [DEPRECATED] since v4.0. Use 'incrementIcon'."
+      },
+      {
+        "name": "incrementIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Style class of the increment icon."
+      },
+      {
+        "name": "decrementButtonIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Style class of the decrement icon.  [DEPRECATED] since v4.0. Use 'decrementIcon'."
+      },
+      {
+        "name": "decrementIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Style class of the decrement icon."
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Locale to be used in formatting."
+      },
+      {
+        "name": "localeMatcher",
+        "type": "'lookup' | 'best fit' | undefined",
+        "default": "best fit",
+        "description": "The locale matching algorithm to use. Possible values are 'lookup' and 'best fit'; the default is 'best fit'. See [Locale Negotation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locale_negotiation) for details."
+      },
+      {
+        "name": "mode",
+        "type": "'decimal' | 'currency' | undefined",
+        "default": "decimal",
+        "description": "Defines the behavior of the component."
+      },
+      {
+        "name": "prefix",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Text to display before the value."
+      },
+      {
+        "name": "suffix",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Text to display after the value."
+      },
+      {
+        "name": "currency",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The currency to use in currency formatting. Possible values are the [ISO 4217 currency codes](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency), such as 'USD' for the US dollar, 'EUR' for the euro, or 'CNY' for the Chinese RMB. There is no default value; if the style is 'currency', the currency property must be provided."
+      },
+      {
+        "name": "currencyDisplay",
+        "type": "string | undefined",
+        "default": "symbol",
+        "description": "How to display the currency in currency formatting. Possible values are 'symbol' to use a localized currency symbol such as €, 'code' to use the ISO currency code, 'name' to use a localized currency name such as 'dollar'."
+      },
+      {
+        "name": "useGrouping",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Whether to use grouping separators, such as thousands separators or thousand/lakh/crore separators."
+      },
+      {
+        "name": "minFractionDigits",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "The minimum number of fraction digits to use. Possible values are from 0 to 20; the default for plain number and percent formatting is 0; the default for currency formatting is the number of minor unit digits provided by the [ISO 4217 currency code](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) list (2 if the list doesn't provide that information)."
+      },
+      {
+        "name": "maxFractionDigits",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "The maximum number of fraction digits to use. Possible values are from 0 to 20; the default for plain number formatting is the larger of minimumFractionDigits and 3; the default for currency formatting is the larger of minimumFractionDigits and the number of minor unit digits provided by the [ISO 4217 currency code](https://www.six-group.com/en/products-services/financial-information/data-standards.html#scrollTo=maintenance-agency) list (2 if the list doesn't provide that information)."
+      },
+      {
+        "name": "roundingMode",
+        "type": "RoundingMode",
+        "default": "undefined",
+        "description": "How decimals should be rounded. The default value is `\"halfExpand\"`, [further information](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#roundingmode)."
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Minimum boundary value."
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Maximum boundary value."
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "default": "1",
+        "description": "Step factor to increment/decrement the value."
+      },
+      {
+        "name": "allowEmpty",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Determines whether the input field is empty."
+      },
+      {
+        "name": "highlightOnFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Highlights automatically the input value."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'filled' | undefined",
+        "default": "outlined",
+        "description": "Specifies the input variant of the component."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that an input field is read-only."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Placeholder text for the input."
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "default": "null",
+        "description": "Spans 100% width of the container when enabled."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the focus input to match a label defined for the chips."
+      },
+      {
+        "name": "inputClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the input field."
+      },
+      {
+        "name": "inputStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the input field."
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes relationships between the component and label(s) where its value should be one or more element IDs."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes a string value that labels the component."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/inputnumber/index.d.ts"
+  },
+  {
+    "componentName": "InputText",
+    "description": "InputText renders a text field to enter data.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "Nullable<string>",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "Nullable<string>",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined | null",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined | null",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'filled' | undefined | null",
+        "default": "outlined",
+        "description": "Specifies the input variant of the component."
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined | null",
+        "default": "null",
+        "description": "Spans 100% width of the container when enabled."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/inputtext/index.d.ts"
+  },
+  {
+    "componentName": "Select",
+    "description": "Select is used to choose an item from a collection of options.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "options",
+        "type": "any[]",
+        "default": "undefined",
+        "description": "An array of select items to display as the available options."
+      },
+      {
+        "name": "optionLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option."
+      },
+      {
+        "name": "optionValue",
+        "type": "string | ((data: any) => any) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the value of an option, defaults to the option itself when not defined."
+      },
+      {
+        "name": "optionDisabled",
+        "type": "string | ((data: any) => boolean) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the disabled flag of an option, defaults to false when not defined."
+      },
+      {
+        "name": "optionGroupLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option group."
+      },
+      {
+        "name": "optionGroupChildren",
+        "type": "string | ((data: any) => any[]) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function that refers to the children options of option group."
+      },
+      {
+        "name": "scrollHeight",
+        "type": "string | undefined",
+        "default": "14rem",
+        "description": "Height of the viewport, a scrollbar is defined if height of list exceeds this value."
+      },
+      {
+        "name": "filter",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When specified, displays a filter input at header."
+      },
+      {
+        "name": "filterPlaceholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Placeholder text to show when filter input is empty."
+      },
+      {
+        "name": "filterLocale",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Locale to use in filtering. The default locale is the host environment's current locale."
+      },
+      {
+        "name": "filterMatchMode",
+        "type": "HintedString<'contains' | 'startsWith' | 'endsWith'> | undefined",
+        "default": "contains",
+        "description": "Defines the filtering algorithm to use when searching the options."
+      },
+      {
+        "name": "filterFields",
+        "type": "string[] | undefined",
+        "default": "undefined",
+        "description": "Fields used when filtering the options, defaults to optionLabel."
+      },
+      {
+        "name": "editable",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, custom value instead of predefined options can be entered using the editable input field."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Default text to display when no option is selected."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'filled' | undefined",
+        "default": "outlined",
+        "description": "Specifies the input variant of the component."
+      },
+      {
+        "name": "dataKey",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "A property to uniquely identify an option."
+      },
+      {
+        "name": "showClear",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, a clear icon is displayed to clear the value."
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "default": "null",
+        "description": "Spans 100% width of the container when enabled."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'labelId' instead.Identifier of the underlying input element."
+      },
+      {
+        "name": "inputStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'labelStyle' instead.Inline style of the input field."
+      },
+      {
+        "name": "inputClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'labelClass' instead.Style class of the input field."
+      },
+      {
+        "name": "labelId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying label element."
+      },
+      {
+        "name": "labelStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the label field."
+      },
+      {
+        "name": "labelClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the label field."
+      },
+      {
+        "name": "panelStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayStyle' instead.Inline style of the overlay panel."
+      },
+      {
+        "name": "panelClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayClass' instead.Style class of the overlay panel."
+      },
+      {
+        "name": "overlayStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the overlay."
+      },
+      {
+        "name": "overlayClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the overlay."
+      },
+      {
+        "name": "appendTo",
+        "type": "HintedString<'body' | 'self'> | undefined | HTMLElement",
+        "default": "body",
+        "description": "A valid query selector or an HTMLElement to specify where the overlay gets attached."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether the select is in loading state."
+      },
+      {
+        "name": "clearIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in clear button."
+      },
+      {
+        "name": "dropdownIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in the select."
+      },
+      {
+        "name": "filterIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in filter input."
+      },
+      {
+        "name": "loadingIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in loading state."
+      },
+      {
+        "name": "resetFilterOnHide",
+        "type": "boolean",
+        "default": "false",
+        "description": "Clears the filter value when hiding the select."
+      },
+      {
+        "name": "resetFilterOnClear",
+        "type": "boolean",
+        "default": "false",
+        "description": "Clears the filter value when clicking on the clear icon."
+      },
+      {
+        "name": "virtualScrollerOptions",
+        "type": "VirtualScrollerProps",
+        "default": "undefined",
+        "description": "Whether to use the virtualScroller feature. The properties of VirtualScroller component can be used like an object in it."
+      },
+      {
+        "name": "autoOptionFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether to focus on the first visible or selected element when the overlay panel is shown."
+      },
+      {
+        "name": "autoFilterFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether to focus on the filter element when the overlay panel is shown."
+      },
+      {
+        "name": "selectOnFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, the focused option is selected."
+      },
+      {
+        "name": "focusOnHover",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "When enabled, the focus is placed on the hovered option."
+      },
+      {
+        "name": "highlightOnSelect",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Whether the selected option will be add highlight class."
+      },
+      {
+        "name": "checkmark",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether the selected option will be shown with a check mark."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/select/index.d.ts"
+  },
+  {
+    "componentName": "CascadeSelect",
+    "description": "CascadeSelect is a form component to select a value from a nested structure of options.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "any | undefined",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "any | undefined",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "options",
+        "type": "any[] | undefined",
+        "default": "undefined",
+        "description": "An array of selectitems to display as the available options."
+      },
+      {
+        "name": "optionLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option."
+      },
+      {
+        "name": "optionValue",
+        "type": "string | ((data: any) => any) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the value of an option, defaults to the option itself when not defined."
+      },
+      {
+        "name": "optionDisabled",
+        "type": "string | ((data: any) => boolean) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the disabled flag of an option, defaults to false when not defined."
+      },
+      {
+        "name": "optionGroupLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option group."
+      },
+      {
+        "name": "optionGroupChildren",
+        "type": "string[] | string | ((data: any) => any[]) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to retrieve the items of a group."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Default text to display when no option is selected."
+      },
+      {
+        "name": "breakpoint",
+        "type": "string | undefined",
+        "default": "960px",
+        "description": "The breakpoint to define the maximum width boundary."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'filled' | undefined",
+        "default": "outlined",
+        "description": "Specifies the input variant of the component."
+      },
+      {
+        "name": "dataKey",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "A property to uniquely identify an option."
+      },
+      {
+        "name": "showClear",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, a clear icon is displayed to clear the value."
+      },
+      {
+        "name": "clearIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in clear button."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying input element."
+      },
+      {
+        "name": "inputStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the input field."
+      },
+      {
+        "name": "inputClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the input field."
+      },
+      {
+        "name": "inputProps",
+        "type": "InputHTMLAttributes | undefined",
+        "default": "undefined",
+        "description": "Used to pass all properties of the HTMLInputElement to the focusable input element inside the component."
+      },
+      {
+        "name": "panelStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayStyle' prop.Inline style of the overlay overlay."
+      },
+      {
+        "name": "panelClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayClass' prop.Style class of the overlay overlay."
+      },
+      {
+        "name": "panelProps",
+        "type": "HTMLAttributes | undefined",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayProps' prop.Used to pass all properties of the HTMLDivElement to the overlay overlay inside the component."
+      },
+      {
+        "name": "overlayStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the overlay overlay."
+      },
+      {
+        "name": "overlayClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the overlay overlay."
+      },
+      {
+        "name": "overlayProps",
+        "type": "HTMLAttributes | undefined",
+        "default": "undefined",
+        "description": "Used to pass all properties of the HTMLDivElement to the overlay overlay inside the component."
+      },
+      {
+        "name": "appendTo",
+        "type": "HintedString<'body' | 'self'> | undefined | HTMLElement",
+        "default": "body",
+        "description": "A valid query selector or an HTMLElement to specify where the overlay gets attached. Special keywords are 'body' for document body and 'self' for the element itself."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether the dropdown is in loading state."
+      },
+      {
+        "name": "dropdownIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in the dropdown."
+      },
+      {
+        "name": "loadingIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in loading state."
+      },
+      {
+        "name": "optionGroupIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in the option group."
+      },
+      {
+        "name": "autoOptionFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether to focus on the first visible or selected element when the overlay panel is shown."
+      },
+      {
+        "name": "selectOnFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, the focused option is selected/opened."
+      },
+      {
+        "name": "focusOnHover",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "When enabled, the focus is placed on the hovered option."
+      },
+      {
+        "name": "searchLocale",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Locale to use in searching. The default locale is the host environment's current locale."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/cascadeselect/index.d.ts"
+  },
+  {
+    "componentName": "ColorPicker",
+    "description": "ColorPicker groups a collection of contents in tabs.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultColor",
+        "type": "any",
+        "default": "ff0000",
+        "description": "Initial color to display when value is not defined."
+      },
+      {
+        "name": "defaultValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "inline",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether to display as an overlay or not."
+      },
+      {
+        "name": "format",
+        "type": "'hex' | 'rgb' | 'hsb' | undefined",
+        "default": "hex",
+        "description": "Format to use in value binding, supported formats are 'hex', 'rgb' and 'hsb'."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "tabindex",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Index of the element in tabbing order."
+      },
+      {
+        "name": "autoZIndex",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Whether to automatically manage layering."
+      },
+      {
+        "name": "baseZIndex",
+        "type": "number | undefined",
+        "default": "0",
+        "description": "Base zIndex value to use in layering."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the focus input to match a label defined for the dropdown."
+      },
+      {
+        "name": "panelClass",
+        "type": "any",
+        "default": "undefined",
+        "description": "Style class of the overlay panel.  [DEPRECATED] since v4.0. Use 'overlayClass' prop instead."
+      },
+      {
+        "name": "overlayClass",
+        "type": "any",
+        "default": "undefined",
+        "description": "Style class of the overlay panel."
+      },
+      {
+        "name": "appendTo",
+        "type": "HintedString<'body' | 'self'> | undefined | HTMLElement",
+        "default": "body",
+        "description": "A valid query selector or an HTMLElement to specify where the overlay gets attached. Special keywords are 'body' for document body and 'self' for the element itself."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/colorpicker/index.d.ts"
+  },
+  {
+    "componentName": "FloatLabel",
+    "description": "FloatLabel visually integrates a label with its form element.",
+    "props": [
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/floatlabel/index.d.ts"
+  },
+  {
+    "componentName": "IconField",
+    "description": "IconField wraps an input and an icon.",
+    "props": [
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/iconfield/index.d.ts"
+  },
+  {
+    "componentName": "InputGroup",
+    "description": "InputGroup displays text, icon, buttons and other content can be grouped next to an input.",
+    "props": [
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/inputgroup/index.d.ts"
+  },
+  {
+    "componentName": "MultiSelect",
+    "description": "MultiSelect is used to select multiple items from a collection.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "options",
+        "type": "any[] | undefined",
+        "default": "undefined",
+        "description": "An array of select items to display as the available options."
+      },
+      {
+        "name": "optionLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option."
+      },
+      {
+        "name": "optionValue",
+        "type": "string | ((data: any) => any) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the value of an option, defaults to the option itself when not defined."
+      },
+      {
+        "name": "optionDisabled",
+        "type": "string | ((data: any) => boolean) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the disabled flag of an option, defaults to false when not defined."
+      },
+      {
+        "name": "optionGroupLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option group."
+      },
+      {
+        "name": "optionGroupChildren",
+        "type": "string | ((data: any) => any[]) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function that refers to the children options of option group."
+      },
+      {
+        "name": "scrollHeight",
+        "type": "string | undefined",
+        "default": "14rem",
+        "description": "Height of the viewport, a scrollbar is defined if height of list exceeds this value."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Label to display when there are no selections."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'filled' | undefined",
+        "default": "outlined",
+        "description": "Specifies the input variant of the component."
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "default": "null",
+        "description": "Spans 100% width of the container when enabled."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying input element."
+      },
+      {
+        "name": "panelStyle",
+        "type": "any",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayStyle' instead.Inline style of the overlay."
+      },
+      {
+        "name": "panelClass",
+        "type": "any",
+        "default": "undefined",
+        "description": "[DEPRECATED] since v4.0. Use 'overlayClass' instead.Style class of the overlay."
+      },
+      {
+        "name": "overlayStyle",
+        "type": "any",
+        "default": "undefined",
+        "description": "Inline style of the overlay."
+      },
+      {
+        "name": "overlayClass",
+        "type": "any",
+        "default": "undefined",
+        "description": "Style class of the overlay."
+      },
+      {
+        "name": "dataKey",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "A property to uniquely identify an option."
+      },
+      {
+        "name": "showClear",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, a clear icon is displayed to clear the value."
+      },
+      {
+        "name": "clearIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in clear button."
+      },
+      {
+        "name": "resetFilterOnClear",
+        "type": "boolean",
+        "default": "false",
+        "description": "Clears the filter value when clicking on the clear icon."
+      },
+      {
+        "name": "filter",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When specified, displays a filter input at header."
+      },
+      {
+        "name": "filterPlaceholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Placeholder text to show when filter input is empty."
+      },
+      {
+        "name": "filterLocale",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Locale to use in filtering. The default locale is the host environment's current locale."
+      },
+      {
+        "name": "filterMatchMode",
+        "type": "HintedString<'contains' | 'startsWith' | 'endsWith'> | undefined",
+        "default": "contains",
+        "description": "Defines the filtering algorithm to use when searching the options."
+      },
+      {
+        "name": "filterFields",
+        "type": "string[] | undefined",
+        "default": "undefined",
+        "description": "Fields used when filtering the options, defaults to optionLabel."
+      },
+      {
+        "name": "appendTo",
+        "type": "HintedString<'body' | 'self'> | undefined | HTMLElement",
+        "default": "body",
+        "description": "A valid query selector or an HTMLElement to specify where the overlay gets attached. Special keywords are 'body' for document body and 'self' for the element itself."
+      },
+      {
+        "name": "display",
+        "type": "'comma' | 'chip' | undefined",
+        "default": "comma",
+        "description": "Defines how the selected items are displayed."
+      },
+      {
+        "name": "selectedItemsLabel",
+        "type": "string | undefined",
+        "default": "null",
+        "description": "Label to display after exceeding max selected labels."
+      },
+      {
+        "name": "maxSelectedLabels",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Decides how many selected item labels to show at most."
+      },
+      {
+        "name": "selectionLimit",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Maximum number of selectable items."
+      },
+      {
+        "name": "showToggleAll",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Whether to show the header checkbox to toggle the selection of all items at once."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether the multiselect is in loading state."
+      },
+      {
+        "name": "checkboxIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in the checkboxes."
+      },
+      {
+        "name": "dropdownIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in the dropdown."
+      },
+      {
+        "name": "filterIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in filter input."
+      },
+      {
+        "name": "loadingIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in loading state."
+      },
+      {
+        "name": "removeTokenIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in chip remove action."
+      },
+      {
+        "name": "chipIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in chip remove action."
+      },
+      {
+        "name": "selectAll",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether all data is selected."
+      },
+      {
+        "name": "resetFilterOnHide",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Clears the filter value when hiding the dropdown."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/multiselect/index.d.ts"
+  },
+  {
+    "componentName": "SelectButton",
+    "description": "SelectButton is used to choose single or multiple items from a list using buttons.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "any",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "options",
+        "type": "any[] | undefined",
+        "default": "undefined",
+        "description": "An array of selectitems to display as the available options."
+      },
+      {
+        "name": "optionLabel",
+        "type": "string | ((data: any) => string) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the label of an option."
+      },
+      {
+        "name": "optionValue",
+        "type": "string | ((data: any) => any) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the value of an option, defaults to the option itself when not defined."
+      },
+      {
+        "name": "optionDisabled",
+        "type": "string | ((data: any) => boolean) | undefined",
+        "default": "undefined",
+        "description": "Property name or getter function to use as the disabled flag of an option, defaults to false when not defined."
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When specified, allows selecting multiple values."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the element should be disabled."
+      },
+      {
+        "name": "dataKey",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "A property to uniquely identify an option."
+      },
+      {
+        "name": "allowEmpty",
+        "type": "boolean | undefined",
+        "default": "true",
+        "description": "Whether selection can be cleared."
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying element."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/selectbutton/index.d.ts"
+  },
+  {
+    "componentName": "Slider",
+    "description": "Slider is a component to provide input with a drag handle.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "number | number[] | undefined",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "number | number[] | undefined",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "default": "0",
+        "description": "Mininum boundary value."
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "default": "100",
+        "description": "Maximum boundary value."
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical' | undefined",
+        "default": "horizontal",
+        "description": "Orientation of the slider."
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "default": "1",
+        "description": "Step factor to increment/decrement the value."
+      },
+      {
+        "name": "range",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When speficed, allows two boundary values to be picked."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "tabindex",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Index of the element in tabbing order."
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes relationships between the component and label(s) where its value should be one or more element IDs."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Used to define a string that labels the element."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/slider/index.d.ts"
+  },
+  {
+    "componentName": "TextArea",
+    "description": "Textarea is a multi-line text input element.",
+    "props": [],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/textarea/index.d.ts"
+  },
+  {
+    "componentName": "ToggleSwitch",
+    "description": "ToggleSwitch is used to select a boolean value.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "boolean | string | undefined",
+        "default": "false",
+        "description": "Specifies whether a toggleswitch should be checked or not."
+      },
+      {
+        "name": "defaultValue",
+        "type": "boolean | string | undefined",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "trueValue",
+        "type": "any",
+        "default": "true",
+        "description": "Value in checked state."
+      },
+      {
+        "name": "falseValue",
+        "type": "any",
+        "default": "false",
+        "description": "Value in unchecked state."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "default": "undefined",
+        "description": "When present, it specifies that an input field is read-only."
+      },
+      {
+        "name": "tabindex",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Index of the element in tabbing order."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying input element."
+      },
+      {
+        "name": "inputClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the input field."
+      },
+      {
+        "name": "inputStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the input field."
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes relationships between the component and label(s) where its value should be one or more element IDs."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes a string value that labels the component."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/toggleswitch/index.d.ts"
+  },
+  {
+    "componentName": "TreeSelect",
+    "description": "TreeSelect is a form component to choose from hierarchical data.",
+    "props": [
+      {
+        "name": "modelValue",
+        "type": "TreeNode | any",
+        "default": "undefined",
+        "description": "Value of the component."
+      },
+      {
+        "name": "defaultValue",
+        "type": "TreeNode | any",
+        "default": "undefined",
+        "description": "The default value for the input when not controlled by `modelValue`."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "The name attribute for the element, typically used in form submissions."
+      },
+      {
+        "name": "options",
+        "type": "TreeNode[] | undefined",
+        "default": "undefined",
+        "description": "An array of treenodes."
+      },
+      {
+        "name": "expandedKeys",
+        "type": "TreeExpandedKeys",
+        "default": "undefined",
+        "description": "A map of keys to represent the expansion state in controlled mode."
+      },
+      {
+        "name": "showClear",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, a clear icon is displayed to clear the value."
+      },
+      {
+        "name": "clearIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display in clear button."
+      },
+      {
+        "name": "scrollHeight",
+        "type": "string | undefined",
+        "default": "20rem",
+        "description": "Height of the viewport, a scrollbar is defined if height of list exceeds this value."
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'multiple' | 'checkbox' | undefined",
+        "default": "undefined",
+        "description": "Defines the selection mode."
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "default": "null",
+        "description": "Spans 100% width of the container when enabled."
+      },
+      {
+        "name": "appendTo",
+        "type": "HintedString<'body' | 'self'> | undefined | HTMLElement",
+        "default": "body",
+        "description": "A valid query selector or an HTMLElement to specify where the overlay gets attached."
+      },
+      {
+        "name": "display",
+        "type": "'comma' | 'chip' | undefined",
+        "default": "comma",
+        "description": "Defines how the selected items are displayed."
+      },
+      {
+        "name": "selectedItemsLabel",
+        "type": "string | undefined",
+        "default": "null",
+        "description": "Label to display after exceeding max selected labels."
+      },
+      {
+        "name": "maxSelectedLabels",
+        "type": "number | undefined",
+        "default": "undefined",
+        "description": "Decides how many selected item labels to show at most."
+      },
+      {
+        "name": "metaKeySelection",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically."
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Whether to display loading indicator."
+      },
+      {
+        "name": "loadingIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon to display when tree is loading."
+      },
+      {
+        "name": "loadingMode",
+        "type": "'mask' | 'icon' | undefined",
+        "default": "mask",
+        "description": "Loading mode display."
+      },
+      {
+        "name": "filter",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When specified, displays an input field to filter the items."
+      },
+      {
+        "name": "filterBy",
+        "type": "string | ((node: TreeNode) => string) | undefined",
+        "default": "label",
+        "description": "When filtering is enabled, filterBy decides which field or fields (comma separated) to search against. A callable taking a TreeNode can be provided instead of a list of field names."
+      },
+      {
+        "name": "filterMode",
+        "type": "'lenient' | 'strict' | undefined",
+        "default": "lenient",
+        "description": "Mode for filtering."
+      },
+      {
+        "name": "filterPlaceholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Placeholder text to show when filter input is empty."
+      },
+      {
+        "name": "filterLocale",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Locale to use in filtering. The default locale is the host environment's current locale."
+      },
+      {
+        "name": "emptyMessage",
+        "type": "string | undefined",
+        "default": "No available options",
+        "description": "Text to display when there are no options available. Defaults to value from PrimeVue locale configuration."
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Label to display when there are no selections."
+      },
+      {
+        "name": "size",
+        "type": "'small' | 'large' | undefined",
+        "default": "undefined",
+        "description": "Defines the size of the component."
+      },
+      {
+        "name": "invalid",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should have invalid state style."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When present, it specifies that the component should be disabled."
+      },
+      {
+        "name": "variant",
+        "type": "'outlined' | 'filled' | undefined",
+        "default": "outlined",
+        "description": "Specifies the input variant of the component."
+      },
+      {
+        "name": "tabindex",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Index of the element in tabbing order."
+      },
+      {
+        "name": "inputId",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying input element."
+      },
+      {
+        "name": "inputClass",
+        "type": "string | object | undefined",
+        "default": "undefined",
+        "description": "Style class of the input field."
+      },
+      {
+        "name": "inputStyle",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Inline style of the input field."
+      },
+      {
+        "name": "inputProps",
+        "type": "InputHTMLAttributes | undefined",
+        "default": "undefined",
+        "description": "Used to pass all properties of the HTMLInputElement to the focusable input element inside the component."
+      },
+      {
+        "name": "panelClass",
+        "type": "any",
+        "default": "undefined",
+        "description": "Style class of the overlay panel."
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes relationships between the component and label(s) where its value should be one or more element IDs."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Establishes a string value that labels the component."
+      },
+      {
+        "name": "formControl",
+        "type": "Record<string, any> | undefined",
+        "default": "undefined",
+        "description": "Form control object, typically used for handling validation and form state."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/treeselect/index.d.ts"
+  },
+  {
+    "componentName": "Chart",
+    "description": "Chart groups a collection of contents in tabs.",
+    "props": [
+      {
+        "name": "type",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Type of the chart."
+      },
+      {
+        "name": "data",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Data to display."
+      },
+      {
+        "name": "options",
+        "type": "object | undefined",
+        "default": "undefined",
+        "description": "Options to customize the chart."
+      },
+      {
+        "name": "plugins",
+        "type": "any[]",
+        "default": "undefined",
+        "description": "Used to custom plugins of the chart."
+      },
+      {
+        "name": "width",
+        "type": "number | undefined",
+        "default": "300",
+        "description": "Width of the chart in non-responsive mode."
+      },
+      {
+        "name": "height",
+        "type": "number | undefined",
+        "default": "150",
+        "description": "Height of the chart in non-responsive mode."
+      },
+      {
+        "name": "canvasProps",
+        "type": "CanvasHTMLAttributes | undefined",
+        "default": "undefined",
+        "description": "Used to pass all properties of the CanvasHTMLAttributes to canvas element inside the component."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/chart/index.d.ts"
+  },
+  {
+    "componentName": "Image",
+    "description": "Displays an image with preview and tranformation options. For multiple image, see Galleria.",
+    "props": [
+      {
+        "name": "preview",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Controls the preview functionality."
+      },
+      {
+        "name": "imageStyle",
+        "type": "any",
+        "default": "undefined",
+        "description": "Inline style of the image element."
+      },
+      {
+        "name": "imageClass",
+        "type": "any",
+        "default": "undefined",
+        "description": "Style class of the image element."
+      },
+      {
+        "name": "indicatorIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Custom indicator icon.  [DEPRECATED] since v4.0. Use 'previewIcon' prop instead."
+      },
+      {
+        "name": "previewIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Custom indicator icon."
+      },
+      {
+        "name": "zoomInDisabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Disable the zoom-in button"
+      },
+      {
+        "name": "zoomOutDisabled",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "Disable the zoom-out button"
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/image/index.d.ts"
+  },
+  {
+    "componentName": "ImageCompare",
+    "description": "ImageCompare compares two images side by side with a slider.",
+    "props": [
+      {
+        "name": "tabindex",
+        "type": "number | undefined",
+        "default": "0",
+        "description": "Index of the element in tabbing order."
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Defines a string value that labels an interactive element."
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Identifier of the underlying input element."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/imagecompare/index.d.ts"
+  },
+  {
+    "componentName": "Accordion",
+    "description": "Accordion groups a collection of contents in tabs.",
+    "props": [
+      {
+        "name": "value",
+        "type": "string | string[] | number | number[] | null | undefined",
+        "default": "null",
+        "description": "Value of the active panel or an array of values in multiple mode."
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, multiple tabs can be activated at the same time."
+      },
+      {
+        "name": "activeIndex",
+        "type": "number | number[] | null | undefined",
+        "default": "null",
+        "description": "Index of the active tab or an array of indexes in multiple mode.  [DEPRECATED] since v4. Use value property instead."
+      },
+      {
+        "name": "lazy",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, hidden tabs are not rendered at all. Defaults to false that hides tabs with css."
+      },
+      {
+        "name": "expandIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon of a collapsed tab."
+      },
+      {
+        "name": "collapseIcon",
+        "type": "string | undefined",
+        "default": "undefined",
+        "description": "Icon of an expanded tab."
+      },
+      {
+        "name": "tabindex",
+        "type": "number | undefined",
+        "default": "0",
+        "description": "Index of the element in tabbing order."
+      },
+      {
+        "name": "selectOnFocus",
+        "type": "boolean | undefined",
+        "default": "false",
+        "description": "When enabled, the focused tab is activated."
+      },
+      {
+        "name": "dt",
+        "type": "DesignToken<any>",
+        "default": "undefined",
+        "description": "It generates scoped CSS variables using design tokens for the component."
+      }
+    ],
+    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/accordion/index.d.ts"
+  }
+]
