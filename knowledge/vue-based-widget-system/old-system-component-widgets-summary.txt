@@ -1,0 +1,195 @@
+COMFYUI COMPONENT WIDGET SYSTEM ANALYSIS
+========================================
+
+Component widgets are special widgets rendered as Vue components outside the canvas, providing rich UI elements beyond what the canvas can render.
+
+CORE ARCHITECTURE
+=================
+
+1. Widget Types
+   - DOMWidget: Wraps raw HTML elements (legacy approach)
+   - ComponentWidget: Wraps Vue components (modern approach)
+   - Both extend BaseDOMWidget interface
+
+2. Key Interfaces (src/scripts/domWidget.ts)
+   - BaseDOMWidget<V>: Base interface for all DOM widgets
+   - DOMWidget<T, V>: For HTML element widgets
+   - ComponentWidget<V, P>: For Vue component widgets
+   - DOMWidgetOptions<V>: Configuration options
+
+3. Widget Registration Flow
+   a) Widget created via composable constructor
+   b) Added to node with addWidget()
+   c) Registered in domWidgetStore when node added to graph
+   d) Rendered by DomWidgets.vue container
+   e) Individual widgets wrapped by DomWidget.vue
+
+KEY FILES
+=========
+
+Core System Files:
+- src/scripts/domWidget.ts - Core widget interfaces and implementations
+- src/stores/domWidgetStore.ts - State management for widgets
+- src/components/graph/DomWidgets.vue - Container that renders all widgets
+- src/components/graph/widgets/DomWidget.vue - Individual widget wrapper
+- src/scripts/widgets.ts - Widget type registry and constructors
+- src/stores/widgetStore.ts - Widget constructor registry
+
+Widget Composables (Factory Functions):
+- src/composables/widgets/useBooleanWidget.ts - Toggle switches
+- src/composables/widgets/useComboWidget.ts - Dropdowns/multi-select
+- src/composables/widgets/useFloatWidget.ts - Float number inputs
+- src/composables/widgets/useIntWidget.ts - Integer number inputs
+- src/composables/widgets/useStringWidget.ts - Text inputs
+- src/composables/widgets/useImagePreviewWidget.ts - Image previews
+- src/composables/widgets/useImageUploadWidget.ts - Image uploads
+- src/composables/widgets/useMarkdownWidget.ts - Markdown rendering
+- src/composables/widgets/useChatHistoryWidget.ts - Chat conversations
+- src/composables/widgets/useProgressTextWidget.ts - Progress displays
+- src/composables/widgets/useRemoteWidget.ts - Remote data utilities
+
+Vue Component Widgets:
+- src/components/graph/widgets/MultiSelectWidget.vue - Multi-selection dropdown
+- src/components/graph/widgets/TextPreviewWidget.vue - Text preview with loading
+- src/components/graph/widgets/ChatHistoryWidget.vue - Chat conversation display
+- src/components/graph/widgets/chatHistory/CopyButton.vue - Copy button
+- src/components/graph/widgets/chatHistory/ResponseBlurb.vue - Chat response
+
+HOW TO CREATE A COMPONENT WIDGET
+================================
+
+1. Create a Vue Component (if needed):
+   ```vue
+   <!-- src/components/graph/widgets/MyWidget.vue -->
+   <template>
+     <div>
+       <input v-model="value" @input="updateValue" />
+     </div>
+   </template>
+   
+   <script setup lang="ts">
+   const value = defineModel<string>({ required: true })
+   const { widget } = defineProps<{
+     widget: ComponentWidget<string>
+   }>()
+   </script>
+   ```
+
+2. Create a Composable Constructor:
+   ```typescript
+   // src/composables/widgets/useMyWidget.ts
+   import MyWidget from '@/components/graph/widgets/MyWidget.vue'
+   import { ComponentWidgetImpl, addWidget } from '@/scripts/domWidget'
+   
+   export const useMyWidget = () => {
+     const widgetConstructor: ComfyWidgetConstructorV2 = (
+       node: LGraphNode,
+       inputSpec: InputSpec
+     ) => {
+       const widgetValue = ref<string>('')
+       
+       const widget = new ComponentWidgetImpl({
+         node,
+         name: inputSpec.name,
+         component: MyWidget,
+         inputSpec,
+         options: {
+           getValue: () => widgetValue.value,
+           setValue: (value: string) => {
+             widgetValue.value = value
+           }
+         }
+       })
+       
+       addWidget(node, widget)
+       return widget
+     }
+     
+     return widgetConstructor
+   }
+   ```
+
+3. Register the Widget Type:
+   ```typescript
+   // In src/scripts/widgets.ts or extension
+   import { useMyWidget } from '@/composables/widgets/useMyWidget'
+   
+   ComfyWidgets['MY_WIDGET'] = transformWidgetConstructorV2ToV1(useMyWidget())
+   ```
+
+WIDGET LIFECYCLE
+================
+
+1. Creation:
+   - Node requests widget via input spec
+   - Composable constructor creates ComponentWidgetImpl
+   - Widget added to node and registered in domWidgetStore
+
+2. Rendering:
+   - DomWidgets.vue monitors canvas changes
+   - Updates widget position, visibility, z-index
+   - DomWidget.vue renders Vue component dynamically
+
+3. State Management:
+   - Widget state stored in domWidgetStore
+   - Position synced with node position on canvas
+   - Visibility based on node visibility and zoom level
+
+4. Cleanup:
+   - Widget unregistered when node removed
+   - onRemove() called for cleanup
+
+IMPORTANT CONCEPTS
+==================
+
+1. Widget Options:
+   - hideOnZoom: Show placeholder when zoomed out
+   - getValue/setValue: State management callbacks
+   - getMinHeight/getMaxHeight: Size constraints
+   - onDraw: Custom canvas drawing
+   - margin: Spacing around widget
+
+2. Widget State (DomWidgetState):
+   - widget: Raw widget instance
+   - visible: Current visibility
+   - readonly: Edit state
+   - zIndex: Stacking order
+   - pos: [x, y] position
+   - size: [width, height]
+
+3. Canvas Integration:
+   - Widgets positioned absolutely over canvas
+   - Transform updates on canvas pan/zoom
+   - DOM clipping for performance
+   - Pointer events disabled when readonly
+
+4. Value Management:
+   - getValue() returns current value
+   - setValue() updates value and triggers callback
+   - v-model binding in Vue components
+   - Serialization handled by serializeValue()
+
+BEST PRACTICES
+==============
+
+1. Always use ComponentWidget over DOMWidget for new widgets
+2. Handle cleanup in widget onRemove()
+3. Use ref() for reactive widget values
+4. Implement proper size constraints
+5. Consider zoom behavior (hideOnZoom option)
+6. Follow Vue 3 composition API patterns
+7. Add proper TypeScript types
+8. Test widget behavior at different zoom levels
+9. Handle readonly state properly
+10. Use existing composables as templates
+
+EXTENSION INTEGRATION
+=====================
+
+Extensions can create custom widgets by:
+1. Creating Vue components
+2. Creating widget constructors
+3. Registering with ComfyWidgets object
+4. Using in node definitions
+
+The system separates canvas rendering (LiteGraph) from DOM UI (Vue), enabling rich interactive widgets while maintaining graph performance.
