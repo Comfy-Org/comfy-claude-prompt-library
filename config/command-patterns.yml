@@ -1,0 +1,109 @@
+# Command Configuration Patterns
+# Defines reusable patterns for Claude Code commands
+
+Command_Categories:
+  Analysis:
+    - analyze-repo-for-claude
+    - estimate-context-window
+    - study-*
+    - validate-*
+    - scan-*
+  
+  Development:
+    - create-feature-task
+    - implement-feature
+    - create-test-plan
+    - fix-bug
+  
+  Quality:
+    - comprehensive-test-review
+    - validate-code-quality
+    - scan-performance
+    - scan-test-coverage
+  
+  Documentation:
+    - generate-primevue-reference
+    - document-api
+    - create-readme
+  
+  Operations:
+    - git-*
+    - gh-*
+    - deploy
+    - migrate
+
+Workflow_Chains:
+  Feature_Development:
+    steps:
+      - create-feature-task
+      - study-current-repo
+      - implement-feature
+      - create-test-plan
+      - comprehensive-test-review
+      - gh-create-pr
+    
+  Bug_Fix:
+    steps:
+      - gh-issue-enhance
+      - analyze-issue
+      - fix-bug
+      - test-fix
+      - gh-pr-submit
+    
+  Code_Review:
+    steps:
+      - scan-code-quality
+      - scan-performance
+      - scan-test-coverage
+      - generate-review-report
+
+Context_Sharing:
+  # Define what context flows between commands
+  analyze_to_implement:
+    from: analyze-*
+    to: implement-*, fix-*
+    shares: [findings, patterns, architecture]
+  
+  scan_to_fix:
+    from: scan-*, validate-*
+    to: fix-*, improve-*
+    shares: [issues, priorities, locations]
+  
+  test_to_deploy:
+    from: test-*, scan-test-coverage
+    to: deploy, gh-pr-*
+    shares: [results, coverage, confidence]
+
+Cache_Patterns:
+  # How long to cache results from different command types
+  Analysis_Commands:
+    ttl: 3600  # 1 hour
+    invalidate_on: [file_changes, branch_switch]
+  
+  Scan_Commands:
+    ttl: 1800  # 30 minutes
+    invalidate_on: [file_changes]
+  
+  Build_Commands:
+    ttl: 300   # 5 minutes
+    invalidate_on: [any_change]
+
+Risk_Assessment:
+  High_Risk_Commands:
+    - deploy
+    - migrate
+    - cleanup-*
+    - delete-*
+    triggers: [confirmation, backup, dry_run]
+  
+  Medium_Risk_Commands:
+    - refactor-*
+    - update-dependencies
+    - merge-*
+    triggers: [plan_first, test_after]
+  
+  Low_Risk_Commands:
+    - analyze-*
+    - scan-*
+    - study-*
+    triggers: []
