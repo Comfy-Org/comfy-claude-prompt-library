@@ -16,6 +16,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:AGENT-improve-command`](.claude/commands/agents/AGENT-improve-command.md) - Improve an existing command by referencing Claude/Anthropic documentation materials
 - [`/user:AGENT-playbook-to-automated-agent-workflow`](.claude/commands/agents/AGENT-playbook-to-automated-agent-workflow.md) - Convert playbooks/workflows to automated agent workflows using local files and MCP tools
 - [`/user:AGENT-summarize-and-log-current-session`](.claude/commands/agents/AGENT-summarize-and-log-current-session.md) - Create ultra-compact summaries of conversations and save them with timestamp-based filenames
+- [`/user:AGENT-memory-search`](.claude/commands/agents/AGENT-memory-search.md) - Search through past conversations using semantic memory system
 
 ### GitHub/Git Commands
 
@@ -36,6 +37,8 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:STUDY-comfyui-custom-nodes-ecosystem`](.claude/commands/research/STUDY-comfyui-custom-nodes-ecosystem.md) - Analyze ComfyUI custom nodes ecosystem patterns and trends using comprehensive dataset
 - [`/user:STUDY-current-repo`](.claude/commands/research/STUDY-current-repo.md) - Study and analyze current repository structure and architecture
 - [`/user:STUDY-node-editor-performance-optimizations`](.claude/commands/research/STUDY-node-editor-performance-optimizations.md) - Absorb performance optimization research for modern graph/canvas libraries
+- [`/user:research-with-auto-mcp`](.claude/commands/research/research-with-auto-mcp.md) - Automatically select and use the best MCP tool for research tasks
+- [`/user:STUDY-knowledge-folder`](.claude/commands/research/STUDY-knowledge-folder.md) - Study all markdown files in a knowledge folder for comprehensive understanding
 
 ### Analysis Commands
 
@@ -54,6 +57,44 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 
 - [`/user:frontend/FE-generate-primevue-reference`](.claude/commands/frontend/FE-generate-primevue-reference.md) - Generate a list of all available PrimeVue components and their properties, for help with building frontend UIs
 - [`/user:frontend/FE-manually-publish-to-pypi`](.claude/commands/frontend/FE-manually-publish-to-pypi.md) - Publish the ComfyUI frontend package to PyPI with specified version
+
+### Utilities
+
+- [`/user:estimate-context-window`](.claude/commands/utilities/estimate-context-window.md) - Estimate token usage and context window requirements for large-scale analysis tasks
+- [`/user:run-gemini-headless`](.claude/commands/utilities/run-gemini-headless.md) - Execute long-running Gemini tasks in background for large context analysis
+
+### Validation
+
+- [`/user:scan-accessibility`](.claude/commands/validation/scan-accessibility.md) - Scan for WCAG 2.1 AA compliance and accessibility issues
+- [`/user:scan-api-contracts`](.claude/commands/validation/scan-api-contracts.md) - Scan API contracts for consistency and breaking changes
+- [`/user:scan-bundle-size`](.claude/commands/validation/scan-bundle-size.md) - Analyze bundle sizes and identify optimization opportunities
+- [`/user:scan-circular-dependencies`](.claude/commands/validation/scan-circular-dependencies.md) - Detect circular dependencies in the codebase
+- [`/user:scan-configuration`](.claude/commands/validation/scan-configuration.md) - Validate configuration files for errors and best practices
+- [`/user:scan-dead-code`](.claude/commands/validation/scan-dead-code.md) - Identify unused code, imports, and dependencies
+- [`/user:scan-error-handling`](.claude/commands/validation/scan-error-handling.md) - Analyze error handling patterns and coverage
+- [`/user:scan-index`](.claude/commands/validation/scan-index.md) - Index of all validation commands with descriptions
+- [`/user:scan-memory-leaks`](.claude/commands/validation/scan-memory-leaks.md) - Detect potential memory leaks and resource management issues
+- [`/user:scan-performance`](.claude/commands/validation/scan-performance.md) - Identify performance bottlenecks and optimization opportunities
+- [`/user:scan-test-coverage`](.claude/commands/validation/scan-test-coverage.md) - Analyze test coverage metrics and identify gaps
+- [`/user:scan-type-safety`](.claude/commands/validation/scan-type-safety.md) - Check TypeScript type safety and strict mode compliance
+- [`/user:validate-basic-security`](.claude/commands/validation/validate-basic-security.md) - Basic security validation for common vulnerabilities
+- [`/user:validate-code-quality`](.claude/commands/validation/validate-code-quality.md) - Comprehensive code quality metrics and analysis
+- [`/user:validate-dependencies`](.claude/commands/validation/validate-dependencies.md) - Audit dependencies for security, licensing, and updates
+
+### Development
+
+- [`/user:create-feature-task`](.claude/commands/development/create-feature-task.md) - Create structured feature development tasks with comprehensive tracking
+- [`/user:use-command-template`](.claude/commands/development/use-command-template.md) - Generate new commands using standardized templates
+
+### Testing
+
+- [`/user:create-test-plan`](.claude/commands/testing/create-test-plan.md) - Generate comprehensive test plans for features or changes
+- [`/user:comprehensive-test-review`](.claude/commands/testing/comprehensive-test-review.md) - Perform thorough review of test suite quality and coverage
+
+### System
+
+- [`/user:memory-health-check`](.claude/commands/system/memory-health-check.md) - Check semantic memory system health and perform maintenance
+- [`/user:semantic-memory-search`](.claude/commands/system/semantic-memory-search.md) - Search through semantic memory for past conversations and context
 
 ## Installation
 
