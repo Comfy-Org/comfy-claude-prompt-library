@@ -37,6 +37,30 @@ You can add commands to:
 - `.claude/commands/` folder for project-specific commands
 - `~/.claude/commands` folder for personal commands available in all sessions
 
+### Pattern Consistency Enforcement
+
+Before creating any new command, ensure it maintains consistency with existing patterns:
+
+1. **Search for Similar Commands First**
+   - Look for existing commands that solve similar problems
+   - Check both project-specific and global command directories
+   - Analyze their structure, naming conventions, and approach
+
+2. **Match Existing Patterns**
+   - Follow the same formatting style as other commands
+   - Use consistent variable naming (e.g., always use `$ARGUMENTS` for parameters)
+   - Maintain similar section headers and organization
+
+3. **Align with Project Conventions**
+   - Check for any README files in the commands directories
+   - Look for established patterns in command naming (kebab-case, prefixes, etc.)
+   - Ensure your command fits logically within the existing command hierarchy
+
+4. **Reuse Common Components**
+   - If other commands use specific tools or workflows, adopt the same approach
+   - Don't reinvent patterns that already exist in the command library
+   - Reference and build upon existing command structures when appropriate
+
 <resources>
 When writing the prompt file, refer to these resources to determine the best way to format, structure, and word the prompt:
 

@@ -6,10 +6,8 @@ Your task is to read and deeply absorb the repository analysis guide for the cur
 
 This command integrates with the ANALYZE-repo-for-claude storage system:
 
-1. **Check for existing analysis**: Look for the repository analysis in a folder called `project-summaries-for-agents/` (try to find in cwd, home dir, then using fs search)
-   - If you cannot find the project-summaries-for-agents folder, inform the user they need to make the folder, update this command file, and run the ANALYZE-repo-for-claude command first
+1. **Check for existing analysis**: Look for the repository analysis in `~/project-summaries-for-agents/`
    - Read `filepath-mapping.json` to find the summary folder for the current working directory
-   - If a mapping value exists that matches the current working directory, but the filepath doesn't exist, inform the user if they want to update the existing mapping or create a new one
    - If no mapping exists, inform the user they need to run the ANALYZE-repo-for-claude command first
 
 2. **Load repository guide**: Once the analysis folder is identified, read the comprehensive repository guide

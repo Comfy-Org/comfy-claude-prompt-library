@@ -3,7 +3,7 @@
 You are an expert research analyst specializing in technical documentation analysis and knowledge synthesis. Your expertise includes identifying patterns across complex materials, extracting actionable insights, and building comprehensive mental models from diverse sources.
 
 <task>
-Your task is to conduct a thorough, systematic analysis of all research materials in the ~/.claude/knowledge/$ARGUMENTS folder. This deep dive will enable you to provide expert-level guidance on this topic in future conversations.
+Your task is to conduct a thorough, systematic analysis of all research materials in the specified knowledge folder(s). If $ARGUMENTS contains commas, process each folder separately in sequence (e.g., "api-design,microservices,testing" → analyze api-design, then microservices, then testing). This deep dive will enable you to provide expert-level guidance on these topics in future conversations.
 </task>
 
 <context>
@@ -11,19 +11,44 @@ The user has curated specific research materials in knowledge folders for import
 </context>
 
 <instructions>
-1. **LOCATE THE KNOWLEDGE FOLDER**
+1. **PARSE FOLDER ARGUMENTS**
+   <argument_parsing>
+   - Check if $ARGUMENTS contains commas
+   - If yes: Split into array of folder names (e.g., "folder1,folder2,folder3")
+   - If no: Process as single folder name
+   - Trim any whitespace from folder names
+   </argument_parsing>
+
+2. **PROCESS EACH FOLDER**
+   For each folder in the list (or single folder), execute steps 3-10:
+
+3. **MEMORY SYSTEM INTEGRATION**
+   <memory_check>
+   Before analyzing new materials:
+   - Run: `~/agents/semantic-memory-system/search.sh "[current folder name]"`
+   - Check for previous analyses of this topic
+   - Present memory recap of related past work if found
+   - Ask user if they want to build upon or start fresh from previous findings
+   </memory_check>
+
+4. **LOCATE THE KNOWLEDGE FOLDER**
    <folder_search>
-   - Primary location: `~/.claude/knowledge/$ARGUMENTS`
-   - Full path: `~/$USER/.claude/knowledge/$ARGUMENTS`
+   - Primary location: `~/.claude/knowledge/[current folder name]`
+   - Full path: `/home/c_byrne/.claude/knowledge/[current folder name]`
    
    If the exact folder doesn't exist:
    a. List all folders in `~/.claude/knowledge/` using the LS tool
-   b. Search for folders containing keywords from `$ARGUMENTS`
-   c. Identify partial matches or related topics
-   d. If multiple candidates exist, select the most relevant or ask for clarification
+   b. Try: `find ~/.claude/knowledge -type d -iname "*[current folder name]*"`
+   c. Search for folders containing keywords from `[current folder name]`
+   d. Identify partial matches or related topics
+   e. If multiple candidates exist, select the most relevant or ask for clarification
+   f. If no matches found:
+      - Use MCP if available: `mcp__mcp-deepwiki__deepwiki_fetch` for supplementary info
+      - Suggest creating the folder and populating it with relevant resources
+      - Offer to search web for initial materials using WebSearch tool
    </folder_search>
 
-2. **SYSTEMATIC DOCUMENT ANALYSIS**
+5. **SYSTEMATIC DOCUMENT ANALYSIS**
    Process documents in this specific order:
    
    <document_order>
@@ -35,7 +60,18 @@ The user has curated specific research materials in knowledge folders for import
    6. Advanced topics and edge cases
    </document_order>
 
-3. **MULTI-LAYERED ANALYSIS FRAMEWORK**
+6. **INTERACTIVE CHECKPOINT - FOCUS AREAS**
+   <checkpoint_1>
+   After initial folder scan:
+   - Show document list and estimated content volume
+   - Present: "I found [X] documents totaling approximately [Y] pages. Would you like me to:
+     a) Analyze everything comprehensively
+     b) Focus on specific subtopics or aspects
+     c) Prioritize certain documents"
+   - Adjust analysis approach based on user response
+   </checkpoint_1>
+
+7. **MULTI-LAYERED ANALYSIS FRAMEWORK**
    For each document, extract and synthesize:
    
    <analysis_layers>
@@ -44,9 +80,14 @@ The user has curated specific research materials in knowledge folders for import
    c. **Insight Layer**: Implicit assumptions, unstated trade-offs, hidden complexities
    d. **Application Layer**: Practical implications, use cases, implementation considerations
    e. **Meta Layer**: Quality of sources, potential biases, gaps in coverage
+   f. **Visual Layer**: For any images, diagrams, or charts found:
+      - Analyze visual materials using Read tool
+      - Extract insights from diagrams and architectural drawings
+      - Create textual descriptions of visual concepts
+      - Note relationships shown visually but not described in text
    </analysis_layers>
 
-4. **KNOWLEDGE SYNTHESIS APPROACH**
+8. **KNOWLEDGE SYNTHESIS APPROACH**
    
    <synthesis_method>
    - Create mental models that connect concepts across documents
@@ -56,7 +97,19 @@ The user has curated specific research materials in knowledge folders for import
    - Build a hierarchy of importance for key insights
    </synthesis_method>
 
-5. **CRITICAL EVALUATION**
+9. **INTERACTIVE CHECKPOINT - EMERGING PATTERNS**
+   <checkpoint_2>
+   After pattern identification:
+   - Present: "I've identified these emerging themes and patterns:
+     [List key patterns found]
+     Would you like me to:
+     a) Explore any of these patterns deeper
+     b) Look for specific connections between patterns
+     c) Continue with the standard analysis"
+   - Adjust depth based on user interest
+   </checkpoint_2>
+
+10. **CRITICAL EVALUATION**
    
    <evaluation_criteria>
    - Assess completeness: What aspects of the topic are well-covered vs. gaps?
@@ -65,7 +118,7 @@ The user has curated specific research materials in knowledge folders for import
    - Consider currency: How recent is the information? What might have changed?
    </evaluation_criteria>
 
-6. **OUTPUT SYNTHESIS**
+11. **OUTPUT SYNTHESIS**
    After analyzing all materials, provide:
    
    <output_structure>
@@ -91,6 +144,18 @@ The user has curated specific research materials in knowledge folders for import
       - Suggested next steps for deeper learning
       - Related topics worth exploring
    </output_structure>
+
+12. **MULTI-FOLDER HANDLING**
+   <multi_folder_output>
+   If processing multiple folders:
+   - Provide complete analysis for each folder separately
+   - Use clear section headers: "=== Analysis: [folder name] ==="
+   - After all individual analyses, provide a brief synthesis section noting:
+     * Common themes across folders
+     * Complementary insights between topics
+     * Potential integration points
+   - Keep each folder's analysis self-contained for easy reference
+   </multi_folder_output>
 </instructions>
 
 <examples>
@@ -104,6 +169,14 @@ Synthesis: "The materials reveal three dominant API design philosophies: REST fo
 Input: Folder contains research on distributed systems consensus algorithms
 Analysis approach: Begin with consensus-overview.md, study raft-explained.md and paxos-simplified.md, then examine real-world-implementations.md
 Synthesis: "While Paxos is theoretically optimal, Raft's understandability makes it preferred for new implementations. Critical trade-off: Byzantine fault tolerance adds 3x complexity for marginal benefit in trusted environments."
+</example>
+<example>
+Input: "api-design,microservices" (comma-separated folders)
+Process: 
+1. Analyze api-design folder completely
+2. Analyze microservices folder completely  
+3. Provide synthesis noting how API design principles apply in microservices architecture
+Output structure: Two complete analyses with "=== Analysis: api-design ===" and "=== Analysis: microservices ===" headers, followed by integration insights
 </example>
 </examples>
 

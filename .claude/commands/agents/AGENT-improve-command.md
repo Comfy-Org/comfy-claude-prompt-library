@@ -37,6 +37,30 @@ Commands are found in:
 - `.claude/commands/` folder for project-specific commands
 - `~/.claude/commands` folder for personal commands available in all sessions
 
+### Pattern Consistency Enforcement
+
+When improving any command, ensure it maintains consistency with existing patterns:
+
+1. **Analyze the Command Context**
+   - Check for other similar commands in the same directory
+   - Understand the existing command's role within the broader command ecosystem
+   - Preserve any established naming conventions or organizational patterns
+
+2. **Maintain Pattern Consistency**
+   - Keep consistent formatting with other commands in the project
+   - Preserve existing variable conventions (e.g., `$ARGUMENTS`)
+   - Don't change structural patterns unless they're demonstrably problematic
+
+3. **Respect Project Standards**
+   - Look for README files or documentation about command standards
+   - Maintain compatibility with existing workflows that may depend on this command
+   - Ensure improvements don't break established patterns other commands follow
+
+4. **Incremental Improvements**
+   - Focus on enhancing clarity and effectiveness without disrupting consistency
+   - If major structural changes are needed, consider how they affect related commands
+   - Document any significant pattern changes in comments within the command
+
 <resources>
 When improving the command, refer to these resources to determine the best way to format, structure, and word the prompt:
 

@@ -21,7 +21,7 @@ Read and analyze ALL files in the knowledge base, paying special attention to:
 - Advanced techniques and optimization strategies
 
 <resources>
-Knowledge base location: .claude/knowledge/claude-code-best-practices/
+Knowledge base location: ~/.claude/knowledge/claude-code-best-practices/
 
 Expected files to study:
 - 00-overview.md - Start here for the big picture
