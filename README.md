@@ -97,6 +97,23 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:memory-health-check`](.claude/commands/system/memory-health-check.md) - Check semantic memory system health and perform maintenance
 - [`/user:semantic-memory-search`](.claude/commands/system/semantic-memory-search.md) - Search through semantic memory for past conversations and context
 
+### Blog Management
+
+- [`/user:add-idea`](.claude/commands/blog/add-idea.md) - Add new blog post ideas to the backlog
+- [`/user:generate-outline`](.claude/commands/blog/generate-outline.md) - Generate structured outlines for blog posts
+- [`/user:list-ideas`](.claude/commands/blog/list-ideas.md) - List and prioritize blog post ideas from backlog
+- [`/user:prepare-publish`](.claude/commands/blog/prepare-publish.md) - Prepare blog posts for publication with final checks
+- [`/user:research-topic`](.claude/commands/blog/research-topic.md) - Research topics for technical blog posts
+- [`/user:review-readability`](.claude/commands/blog/review-readability.md) - Review blog posts for readability and clarity
+- [`/user:review-seo`](.claude/commands/blog/review-seo.md) - Review blog posts for SEO optimization
+- [`/user:review-style`](.claude/commands/blog/review-style.md) - Review blog posts for style and consistency
+- [`/user:review-technical`](.claude/commands/blog/review-technical.md) - Review technical accuracy of blog posts
+- [`/user:write-draft`](.claude/commands/blog/write-draft.md) - Write first drafts of blog posts
+
+### Minor Precautions
+
+- [`/user:careful-of-refactor-between-msgs`](.claude/commands/minor-precautions/careful-of-refactor-between-msgs.md) - Reminder to be careful about refactoring between messages
+
 ## Installation
 
 1. Clone this repository
