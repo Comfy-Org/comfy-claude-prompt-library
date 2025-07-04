@@ -148,7 +148,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/button/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/button/index.d.ts"
   },
   {
     "componentName": "InputNumber",
@@ -407,7 +407,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/inputnumber/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/inputnumber/index.d.ts"
   },
   {
     "componentName": "InputText",
@@ -468,7 +468,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/inputtext/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/inputtext/index.d.ts"
   },
   {
     "componentName": "Select",
@@ -769,7 +769,7 @@
         "description": "Whether the selected option will be shown with a check mark."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/select/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/select/index.d.ts"
   },
   {
     "componentName": "CascadeSelect",
@@ -998,7 +998,7 @@
         "description": "Locale to use in searching. The default locale is the host environment's current locale."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/cascadeselect/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/cascadeselect/index.d.ts"
   },
   {
     "componentName": "ColorPicker",
@@ -1107,7 +1107,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/colorpicker/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/colorpicker/index.d.ts"
   },
   {
     "componentName": "FloatLabel",
@@ -1120,7 +1120,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/floatlabel/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/floatlabel/index.d.ts"
   },
   {
     "componentName": "IconField",
@@ -1133,7 +1133,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/iconfield/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/iconfield/index.d.ts"
   },
   {
     "componentName": "InputGroup",
@@ -1146,7 +1146,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/inputgroup/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/inputgroup/index.d.ts"
   },
   {
     "componentName": "MultiSelect",
@@ -1423,7 +1423,7 @@
         "description": "Clears the filter value when hiding the dropdown."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/multiselect/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/multiselect/index.d.ts"
   },
   {
     "componentName": "SelectButton",
@@ -1526,7 +1526,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/selectbutton/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/selectbutton/index.d.ts"
   },
   {
     "componentName": "Slider",
@@ -1623,13 +1623,13 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/slider/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/slider/index.d.ts"
   },
   {
     "componentName": "TextArea",
     "description": "Textarea is a multi-line text input element.",
     "props": [],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/textarea/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/textarea/index.d.ts"
   },
   {
     "componentName": "ToggleSwitch",
@@ -1732,7 +1732,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/toggleswitch/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/toggleswitch/index.d.ts"
   },
   {
     "componentName": "TreeSelect",
@@ -1973,7 +1973,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/treeselect/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/treeselect/index.d.ts"
   },
   {
     "componentName": "Chart",
@@ -2028,7 +2028,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/chart/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/chart/index.d.ts"
   },
   {
     "componentName": "Image",
@@ -2083,7 +2083,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/image/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/image/index.d.ts"
   },
   {
     "componentName": "ImageCompare",
@@ -2114,7 +2114,7 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/imagecompare/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/imagecompare/index.d.ts"
   },
   {
     "componentName": "Accordion",
@@ -2175,6 +2175,6 @@
         "description": "It generates scoped CSS variables using design tokens for the component."
       }
     ],
-    "filePath": "/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone/node_modules/primevue/accordion/index.d.ts"
+    "filePath": "[PROJECT_ROOT]/node_modules/primevue/accordion/index.d.ts"
   }
 ]

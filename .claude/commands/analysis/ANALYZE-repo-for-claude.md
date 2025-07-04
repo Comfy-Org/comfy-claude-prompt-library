@@ -4,7 +4,7 @@ Your task is to create a comprehensive repository analysis guide optimized for C
 
 ## Storage System
 
-All repository summaries are stored in `/home/c_byrne/project-summaries-for-agents/`:
+All repository summaries are stored in `~/project-summaries-for-agents/`:
 - `filepath-mapping.json`: Maps repository file paths to summary folder names
 - Individual folders contain the actual summary files for each repository
 

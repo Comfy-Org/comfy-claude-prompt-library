@@ -1,9 +1,9 @@
-Get all pull requests created by christian-byrne in the past $ARGUMENTS hours (whether opened or closed) and provide a nicely formatted list with links and summaries.
+Get all pull requests created by the current user in the past $ARGUMENTS hours (whether opened or closed) and provide a nicely formatted list with links and summaries.
 
 Follow these steps:
 
 1. Use `gh pr list` with appropriate filters to get both open and closed PRs from all repositories you have access to
-2. Filter the results to show only PRs created by christian-byrne in the past $ARGUMENTS hours (if not specified, use 26 hours)
+2. Filter the results to show only PRs created by the current user in the past $ARGUMENTS hours (if not specified, use 26 hours)
 3. For each PR, gather:
    - PR title and number
    - Repository name
@@ -21,7 +21,7 @@ Follow these steps:
 5. If no PRs are found in the time range, clearly state that
 
 Commands to use:
-- `gh pr list --author=christian-byrne --state=all --limit=50` (to get both open and closed)
+- `gh pr list --author=@me --state=all --limit=50` (to get both open and closed)
 - `gh pr view <PR_NUMBER> --repo <REPO>` to get additional details if needed
 - Use date filtering to ensure only PRs from the past $ARGUMENTS hours are included
 

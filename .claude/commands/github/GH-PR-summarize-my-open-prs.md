@@ -11,8 +11,8 @@ Follow these steps systematically:
 First, gather comprehensive PR data:
 
 ```bash
-# Get all open PRs by christian-byrne from the last 3 months
-gh search prs --author=christian-byrne --state=open --created=">=`date -d '3 months ago' '+%Y-%m-%d'`" --json url,title,repository,number,createdAt,updatedAt,headRefName,baseRefName,mergeable,reviewDecision,assignees,labels,milestone --limit 100
+# Get all open PRs by the current user from the last 3 months
+gh search prs --author=@me --state=open --created=">=`date -d '3 months ago' '+%Y-%m-%d'`" --json url,title,repository,number,createdAt,updatedAt,headRefName,baseRefName,mergeable,reviewDecision,assignees,labels,milestone --limit 100
 ```
 
 For each PR found:

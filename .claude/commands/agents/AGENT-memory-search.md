@@ -31,7 +31,7 @@ Example:
 
 ### 3. Execute Semantic Search
 ```bash
-cd /home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone-vue-nodes/semantic-memory-system
+cd ~/semantic-memory-system
 source venv/bin/activate
 
 # Run multiple searches

@@ -34,7 +34,7 @@ The user has curated specific research materials in knowledge folders for import
 4. **LOCATE THE KNOWLEDGE FOLDER**
    <folder_search>
    - Primary location: `~/.claude/knowledge/[current folder name]`
-   - Full path: `/home/c_byrne/.claude/knowledge/[current folder name]`
+   - Full path: `~/.claude/knowledge/[current folder name]`
    
    If the exact folder doesn't exist:
    a. List all folders in `~/.claude/knowledge/` using the LS tool
