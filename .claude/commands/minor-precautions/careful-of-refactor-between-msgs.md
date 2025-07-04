@@ -1,0 +1,1 @@
+Yes, what you said is good and we can proceed, but i also just did some unrelated refactoring in your current project, so try to re-orient yourself to the changes quickly, looking out for any changed filenames or moved chunks of text. Once you're re-oriented, go ahead and proceed with what you just proposed.
