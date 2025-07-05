@@ -18,6 +18,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:AGENT-summarize-and-log-current-session`](.claude/commands/agents/AGENT-summarize-and-log-current-session.md) - Create ultra-compact summaries of conversations and save them with timestamp-based filenames
 - [`/user:AGENT-memory-search`](.claude/commands/agents/AGENT-memory-search.md) - Search through past conversations using semantic memory system
 - [`/user:AGENT-learn-claude-code-best-practices`](.claude/commands/agents/AGENT-learn-claude-code-best-practices.md) - Study and synthesize Claude Code best practices from comprehensive knowledge base
+- [`/user:summarize-book`](.claude/commands/summarize-book.md) - Create comprehensive summaries of books with structured analysis
 
 ### GitHub/Git Commands
 
