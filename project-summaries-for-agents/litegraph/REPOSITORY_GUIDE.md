@@ -7,9 +7,9 @@
 - **Purpose**: Graph node editor similar to Unreal Blueprints/PureData for visual programming
 - **Repository**: https://github.com/Comfy-Org/litegraph.js
 - **Main branch**: `master`
-- **Current version**: 0.15.11
+- **Current version**: 0.16.3 (December 2025)
 - **License**: MIT
-- **Status**: Active development (68 open issues, 10 open PRs)
+- **Status**: Active development with enhanced subgraph event system
 
 ### Key Characteristics
 - Fork of original litegraph.js with ComfyUI-specific customizations
@@ -30,13 +30,14 @@
 - **Testing**: Vitest 3.1.3 with JSdom environment
 - **Linting**: ESLint 9.21.0 with extensive rule configuration
 - **Formatting**: Prettier 3.3.3
-- **Git Hooks**: Husky + lint-staged for pre-commit validation
-- **Type Generation**: vite-plugin-dts for declaration files
+- **Git Hooks**: Husky 9.1.7 + lint-staged 15.2.10 for pre-commit validation
+- **Type Generation**: vite-plugin-dts 4.5.4 for declaration files
 
 ### Key Dependencies (Dev Only)
-- TypeScript 5.8.3 with strict configuration
+- TypeScript 5.8.2 with strict configuration
 - Extensive ESLint configuration (Stylistic, Antfu, Unicorn, JSDoc plugins)
 - Vitest for testing with snapshot support
+- Added `typecheck` script for TypeScript validation (v0.16.2)
 
 ## Directory Structure
 
@@ -70,9 +71,19 @@ litegraph-clone/
 │   │   ├── ComboWidget.ts       # Dropdown selections
 │   │   ├── TextWidget.ts        # Text inputs
 │   │   └── widgetMap.ts         # Widget type registry
-│   ├── subgraph/               # Nested graph system
-│   │   ├── Subgraph.ts         # Subgraph container
-│   │   └── SubgraphInputNode.ts # Subgraph interface nodes
+│   ├── subgraph/               # Nested graph system (v0.16.0+)
+│   │   ├── Subgraph.ts         # Subgraph definition with event system
+│   │   ├── SubgraphNode.ts     # Instance with IO change handlers
+│   │   ├── SubgraphInputNode.ts # Input boundary node
+│   │   ├── SubgraphOutputNode.ts # Output boundary node
+│   │   ├── SubgraphInput.ts    # Input slot definitions
+│   │   ├── SubgraphOutput.ts   # Output slot definitions
+│   │   ├── SubgraphIONodeBase.ts # Base class for IO nodes
+│   │   ├── SubgraphSlotBase.ts # Base for subgraph slots
+│   │   ├── EmptySubgraphInput.ts # Empty slot for adding inputs
+│   │   ├── EmptySubgraphOutput.ts # Empty slot for adding outputs
+│   │   ├── ExecutableNodeDTO.ts # Flattened node for execution
+│   │   └── subgraphUtils.ts    # Utility functions
 │   ├── types/                  # Type definitions
 │   │   ├── globalEnums.ts      # Core enumerations
 │   │   ├── serialisation.ts    # Save/load types
@@ -83,7 +94,8 @@ litegraph-clone/
 │   │   └── uuid.ts             # ID generation
 │   └── infrastructure/         # Base infrastructure
 │       ├── CustomEventTarget.ts # Event system base
-│       └── Rectangle.ts        # Spatial calculations
+│       ├── Rectangle.ts        # Spatial calculations
+│       └── SubgraphEventMap.ts # Subgraph event types (v0.16.2+)
 ├── test/                       # Test suite
 │   ├── *.test.ts              # Unit tests
 │   ├── *.integration.test.ts  # Integration tests
@@ -92,11 +104,10 @@ litegraph-clone/
 │   └── testExtensions.ts      # Custom test utilities
 ├── public/css/                # CSS styles
 ├── dist/                      # Build output (git-ignored)
-├── docs/                      # Documentation
-│   ├── README.md             # Main documentation
-│   ├── ARCHITECTURE_README.md # Architecture overview
-│   ├── API.md                # New API documentation
-│   └── CONTRIBUTING.md       # Contribution guidelines
+├── README.md                  # Main documentation
+├── API.md                     # New API documentation
+├── CONTRIBUTING.md            # Contribution guidelines
+├── CLAUDE.md                  # Claude Code-specific rules
 └── package.json              # Package configuration
 ```
 
@@ -124,7 +135,8 @@ npm test -- -t "name"   # Run specific test by name
 npm test -- filename    # Run specific test file
 
 # Type Checking
-tsc                     # Run TypeScript compiler (no emit)
+npm run typecheck       # Run TypeScript compiler (no emit) - Added in v0.16.2
+tsc                     # Alternative: Run TypeScript compiler directly
 ```
 
 ### Pre-commit Workflow
@@ -133,6 +145,7 @@ tsc                     # Run TypeScript compiler (no emit)
   - **TypeScript files**: Prettier → ESLint → TypeScript compilation
   - **JavaScript files**: Prettier → ESLint
   - **CSS files**: Prettier formatting
+- **Note**: Test imports fixed to prevent circular dependencies (v0.16.1)
 
 ### Build Process
 1. **TypeScript Compilation**: `tsc` for type checking
@@ -177,10 +190,12 @@ graph TD
     LGraph --> LLink[Link System]
     LGraph --> LGraphGroup[Groups]
     LGraph --> Reroute[Reroutes]
+    LGraph --> Subgraph[Subgraph System v0.16.0+]
     LGraphCanvas[Canvas Renderer] --> LGraph
     LGraphNode --> Widgets[Widget System]
     LGraphNode --> Slots[Slot System]
-    Subgraph --> LGraph
+    Subgraph --> SubgraphNode[Subgraph Instances]
+    Subgraph --> SubgraphIO[Subgraph IO Nodes]
 ```
 
 ### Key Architectural Patterns
@@ -209,6 +224,26 @@ graph TD
 - Graph connectivity changes trigger updates
 - Automatic layout recalculation
 - Change propagation through graph
+
+#### 6. **CanvasPointer API** (Interaction System)
+- Modern pointer event handling system replacing legacy code
+- Provides standard click, double-click, and drag UX
+- Configurable click drift and double-click detection
+- Multi-select improvements (no longer requires shift for dragging multiple items)
+- Bug fixes for micro-displacement and undo step issues
+
+#### 7. **Subgraph System** (v0.16.0+, enhanced v0.16.2+)
+- **Hierarchical Composition**: Graphs can contain subgraph nodes that reference other graphs
+- **Definition vs Instance**: Subgraph class defines reusable templates, SubgraphNode represents instances
+- **Dynamic IO**: Subgraph inputs/outputs can be added/removed/renamed dynamically
+- **Event-Driven Updates**: Changes to subgraph definitions automatically update all instances
+- **Execution Flattening**: Complex nested structures are flattened for efficient execution
+- **Enhanced Event System (v0.16.2+)**:
+  - Dedicated `SubgraphEventMap` for type-safe event handling
+  - Events: `adding-input`, `input-added`, `removing-input`, `renaming-input`
+  - Events: `adding-output`, `output-added`, `removing-output`, `renaming-output`
+  - SubgraphNode automatically handles IO changes from parent subgraph (v0.16.3)
+  - Event listeners automatically update node inputs/outputs when subgraph definition changes
 
 ### Extension Points
 
@@ -248,6 +283,35 @@ class MyWidget extends BaseWidget {
 }
 ```
 
+#### Creating and Using Subgraphs (v0.16.0+)
+```typescript
+// Create a subgraph from selected nodes
+const subgraph = graph.createSubgraph("My Subgraph", selectedNodes)
+
+// Or convert existing nodes to a subgraph
+const subgraphNode = graph.convertToSubgraph(selectedNodes)
+
+// Enhanced event handling (v0.16.2+)
+subgraph.addEventListener("input-added", (e) => {
+  console.log("New input:", e.detail.input)
+})
+
+subgraph.addEventListener("renaming-input", (e) => {
+  console.log(`Input renamed from ${e.detail.oldName} to ${e.detail.newName}`)
+})
+
+subgraph.addEventListener("removing-output", (e) => {
+  console.log("Removing output:", e.detail.output, "at index", e.detail.index)
+})
+
+// Access subgraph IO definitions
+subgraph.inputs // Array of SubgraphInput
+subgraph.outputs // Array of SubgraphOutput
+
+// SubgraphNode automatically syncs with definition changes (v0.16.3)
+// No manual update needed when subgraph IO changes
+```
+
 ## Common Development Tasks
 
 ### Adding New Node Types
@@ -265,11 +329,19 @@ class MyWidget extends BaseWidget {
 4. **Register Widget**: Add to widget type map
 5. **Test Interactions**: Test widget behavior in nodes
 
+### Subgraph Development (v0.16.0+)
+1. **Create Subgraph Definition**: Extend `Subgraph` class
+2. **Define IO Interface**: Add inputs/outputs via `addInput()`/`addOutput()`
+3. **Handle IO Events**: Listen for input/output changes
+4. **Test Nesting**: Verify subgraphs work when nested
+5. **Update Documentation**: Document subgraph behavior
+
 ### Testing New Features
 1. **Unit Tests**: Test individual components in isolation
 2. **Integration Tests**: Test component interactions
 3. **Snapshot Tests**: Verify serialization output
 4. **Manual Testing**: Use dev server for interactive testing
+5. **Note**: Subgraph system currently lacks comprehensive test coverage
 
 ### Performance Optimization
 1. **Profile Rendering**: Use browser dev tools
@@ -295,6 +367,11 @@ test("should handle node connections", ({ expect, minimalGraph }) => {
   expect(minimalGraph.links.size).toBe(1)
 })
 ```
+
+### Testing Gaps
+- **Subgraph System**: The v0.16.0 subgraph feature lacks unit and integration tests
+- **IO Event Handlers**: New event handlers for subgraph IO changes need test coverage
+- **Nested Subgraph Execution**: Complex nesting scenarios require testing
 
 ### Running Tests
 ```bash
@@ -323,6 +400,8 @@ npm test -- --coverage
 - **Canvas Rendering**: Check browser console for WebGL/Canvas errors
 - **Performance**: Profile with browser dev tools, check for infinite loops
 - **Memory Leaks**: Ensure proper cleanup in `onRemoved()` callbacks
+- **Subgraph Issues**: Check for circular references, verify IO event handlers
+- **Nested Subgraphs**: Ensure depth limit (1000) isn't exceeded
 
 ### Git Workflow Issues
 - **Merge Conflicts**: Avoid committing build files
@@ -339,7 +418,11 @@ npm test -- --coverage
 5. **`src/LGraphCanvas.ts`** - Rendering and UI interaction
 6. **`src/interfaces.ts`** - Core type definitions
 7. **`src/types/globalEnums.ts`** - Important enumerations
-8. **`test/testExtensions.ts`** - Test patterns and utilities
+8. **`src/subgraph/Subgraph.ts`** - Subgraph system core (v0.16.0+)
+9. **`src/subgraph/SubgraphNode.ts`** - Subgraph instances with IO handlers
+10. **`src/infrastructure/SubgraphEventMap.ts`** - Subgraph event types (v0.16.2+)
+11. **`API.md`** - New API documentation including CanvasPointer system
+12. **`test/testExtensions.ts`** - Test patterns and utilities
 
 ### Configuration Files
 - **`package.json`** - Dependencies and scripts
@@ -349,9 +432,9 @@ npm test -- --coverage
 
 ### Documentation Files
 - **`README.md`** - Usage and installation
-- **`ARCHITECTURE_README.md`** - Technical architecture
 - **`API.md`** - New API documentation
 - **`CONTRIBUTING.md`** - Development guidelines
+- **`CLAUDE.md`** - Claude Code-specific development rules
 
 ## Development Context for AI Assistance
 
@@ -367,6 +450,27 @@ npm test -- --coverage
 - **Performance**: Must handle complex graphs with hundreds of nodes
 - **Browser Compatibility**: Canvas 2D rendering across different browsers
 - **Type Safety**: Strict TypeScript prevents runtime errors
-- **Test Coverage**: Comprehensive testing prevents regressions
+- **Test Coverage**: Comprehensive testing prevents regressions (note: subgraph system needs tests)
+
+### Recent Development Focus (v0.16.x)
+- **Subgraph System**: Major feature addition enabling hierarchical graph composition (v0.16.0)
+- **Enhanced Event System (v0.16.2)**: Type-safe event handling for subgraph IO changes
+- **Automatic IO Sync (v0.16.3)**: SubgraphNode instances automatically update when parent subgraph IO changes
+- **Node Interaction**: Improved resize behavior and pointer handling
+- **IO Node Enhancements**: Better support for dynamic input/output management
+- **Widget Fixes**: Resolved custom widget rendering issues
+- **CI/CD Improvements**: 
+  - Fixed test imports to prevent circular dependencies (v0.16.1)
+  - Added typecheck script to package.json (v0.16.2)
+  - Fixed prerelease version tag in CI (v0.16.3)
+  - Improved release process
+- **Trackpad Support**: Fixed control + mouse-wheel zoom in trackpad mode (v0.16.2)
+
+### Upcoming Development Areas
+Based on open issues:
+- **Node Slot Configuration**: Rewrite of slot configuration process (#1099)
+- **IO Node Linking**: Direct IO-to-IO node connections (#1085)
+- **Link Drop Support**: Dropping links on empty IO node backgrounds (#1083)
+- **Code Refactoring**: Split large classes (LGraph, LGraphCanvas, LGraphNode) into smaller, manageable objects (#1045-1048)
 
 This repository serves as the core graph editing engine for ComfyUI, making it critical infrastructure that requires careful, well-tested changes with strong consideration for backward compatibility and performance.
