@@ -4,7 +4,7 @@
 
 **Repository**: ComfyUI_examples  
 **Owner**: comfyanonymous  
-**Location**: `/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_examples`  
+**Location**: `~/projects/comfyui-frontend-testing/ComfyUI_examples`  
 **GitHub**: https://github.com/comfyanonymous/ComfyUI_examples  
 **License**: Open source (permissive ISC-style license)  
 **Purpose**: Comprehensive collection of workflow examples demonstrating ComfyUI's capabilities

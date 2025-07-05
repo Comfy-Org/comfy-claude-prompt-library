@@ -3,7 +3,7 @@
 ## Repository Overview
 
 **Repository**: ComfyUI Website Platform  
-**Location**: `/home/c_byrne/projects/comfyui-frontend-testing/website/`  
+**Location**: `~/projects/comfyui-frontend-testing/website/`  
 **Purpose**: Web platform for ComfyUI API key management and user dashboard  
 **Primary Function**: Allows users to authenticate, manage API keys, view usage logs, and update profile information  
 

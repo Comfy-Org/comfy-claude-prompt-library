@@ -4,7 +4,7 @@
 
 **Purpose**: A cloud function that scans custom node packages for security issues in the [Comfy Registry](https://registry.comfy.org) ecosystem.
 
-**Repository**: `/home/c_byrne/projects/comfy-testing-environment/security-scanner`  
+**Repository**: `~/projects/comfy-testing-environment/security-scanner`  
 **Owner**: Comfy-Org  
 **License**: Not specified  
 **Type**: Google Cloud Function (Python)

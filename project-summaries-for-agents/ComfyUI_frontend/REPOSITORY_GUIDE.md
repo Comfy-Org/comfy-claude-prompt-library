@@ -2,8 +2,8 @@
 
 **Repository:** [Comfy-Org/ComfyUI_frontend](https://github.com/Comfy-Org/ComfyUI_frontend)  
 **License:** GPL-3.0-only  
-**Version:** 1.22.1  
-**Local Path:** `/home/c_byrne/projects/comfyui-frontend-testing/ComfyUI_frontend-clone-2`
+**Version:** 1.22.2 (Check package.json for current version)  
+**Local Path:** `~/projects/comfyui-frontend-testing/ComfyUI_frontend-clone`
 
 ## Repository Overview
 
@@ -11,12 +11,16 @@ ComfyUI_frontend is the official frontend implementation for ComfyUI, a powerful
 
 ### Purpose and Functionality
 - **Visual Node Editor**: LiteGraph.js-based canvas for creating node workflows
-- **Extension System**: Robust plugin architecture for custom functionality  
+- **Extension System**: Robust plugin architecture with bottom panel tab support  
 - **Queue Management**: Execution queue with real-time progress tracking
 - **Template Workflows**: Pre-built workflow templates for common use cases
 - **Multi-language Support**: Built-in i18n with support for 7 languages
 - **3D Visualization**: 3D model loading and animation capabilities
 - **Desktop Integration**: Electron app with native platform features
+- **Subgraph System**: Organize workflows into reusable subgraphs
+- **Bottom Panel**: Extensible bottom panel with terminal tabs (logs, commands)
+- **Audio Support**: Audio node functionality and upload capabilities
+- **Release Management**: Built-in help center with release notifications
 
 ### Release Process
 - **2-week release cycles**: 1 week development, 1 week feature freeze
@@ -31,7 +35,7 @@ ComfyUI_frontend is the official frontend implementation for ComfyUI, a powerful
 - **TypeScript** (v5.4.5) for type safety
 - **Pinia** (v2.1.7) for state management
 - **PrimeVue** (v4.2.5) + TailwindCSS (v3.4.4) for UI
-- **LiteGraph.js** (@comfyorg/litegraph v0.15.15) for node editor
+- **LiteGraph.js** (@comfyorg/litegraph v0.16.1) for node editor
 - **Vite** (v5.4.19) for build tooling
 - **Vue-i18n** (v9.14.3) for internationalization
 
@@ -64,6 +68,10 @@ ComfyUI_frontend/
 │   │   ├── graph/               # Node graph related components
 │   │   ├── sidebar/             # Sidebar and navigation
 │   │   ├── templates/           # Workflow template components
+│   │   ├── bottomPanel/         # Bottom panel components
+│   │   │   └── tabs/terminal/   # Terminal tab components
+│   │   ├── breadcrumb/          # Subgraph breadcrumb navigation
+│   │   ├── helpcenter/          # Help center and release notes
 │   │   └── ...                  # Other feature-specific directories
 │   ├── composables/             # Vue composables for shared logic
 │   │   ├── auth/                # Authentication composables
@@ -73,18 +81,26 @@ ComfyUI_frontend/
 │   │   └── ...                  # Other domain-specific composables
 │   ├── stores/                  # Pinia stores for state management
 │   │   ├── workspace/           # Workspace-specific stores
+│   │   │   ├── bottomPanelStore.ts # Bottom panel state management
+│   │   │   └── ...              # Other workspace stores
 │   │   ├── commandStore.ts      # Command execution
 │   │   ├── graphStore.ts        # Graph canvas state
 │   │   ├── workflowStore.ts     # Workflow management
+│   │   ├── subgraphNavigationStore.ts # Subgraph navigation state
+│   │   ├── releaseStore.ts      # Release management
 │   │   └── ...                  # Other domain stores
 │   ├── services/                # Business logic services
 │   │   ├── nodeSearchService.ts # Node search functionality
 │   │   ├── workflowService.ts   # Workflow operations
+│   │   ├── subgraphService.ts   # Subgraph functionality
+│   │   ├── releaseService.ts    # Release management
+│   │   ├── audioService.ts      # Audio handling
 │   │   └── ...                  # Other service modules
 │   ├── extensions/core/         # Built-in extensions
 │   │   ├── groupNode.ts         # Group node functionality
 │   │   ├── noteNode.ts          # Note annotations
 │   │   ├── maskeditor.ts        # Image mask editor
+│   │   ├── uploadAudio.ts       # Audio upload functionality
 │   │   └── ...                  # Other core extensions
 │   ├── scripts/                 # Core application scripts
 │   │   ├── api.ts               # Backend API communication
@@ -263,6 +279,17 @@ app.registerExtension({
     }
   ],
   
+  // Bottom panel tabs (NEW)
+  bottomPanelTabs: [
+    {
+      id: 'my.tab',
+      title: 'My Tab',
+      icon: 'pi pi-list',
+      type: 'vue',
+      component: MyTabComponent
+    }
+  ],
+  
   // Commands and keybindings
   commands: [
     {
@@ -358,6 +385,104 @@ const workflowStore = useWorkflowStore()
 const { currentWorkflow, isExecuting } = storeToRefs(workflowStore)
 ```
 
+### Bottom Panel Extension System
+
+The bottom panel provides an extensible tab system for additional functionality:
+
+```typescript
+// Bottom panel tab definition
+interface BottomPanelExtension {
+  id: string
+  title: string
+  icon: string
+  type: 'vue' | 'custom'
+  component?: Component
+  tooltip?: string
+}
+
+// Register bottom panel tab via extension
+app.registerExtension({
+  name: 'MyExtension',
+  bottomPanelTabs: [
+    {
+      id: 'my.tab',
+      title: 'My Tab',
+      icon: 'pi pi-list',
+      type: 'vue',
+      component: MyTabComponent
+    }
+  ]
+})
+
+// Or register directly with the store
+const bottomPanelStore = useBottomPanelStore()
+bottomPanelStore.registerBottomPanelTab({
+  id: 'my.tab',
+  title: 'My Tab',
+  icon: 'pi pi-list',
+  type: 'vue',
+  component: MyTabComponent
+})
+```
+
+**Built-in bottom panel tabs:**
+- **Logs Tab**: Displays application logs and execution output
+- **Commands Tab**: Terminal interface for command execution (Electron only)
+
+### Subgraph System Architecture
+
+Subgraphs allow organizing complex workflows into reusable components:
+
+```typescript
+// Subgraph service usage
+const subgraphService = useSubgraphService()
+
+// Register a subgraph node definition
+subgraphService.registerLitegraphNode(
+  nodeDef,        // ComfyNodeDef
+  subgraph,       // Subgraph instance
+  exportedSubgraph // ExportedSubgraph
+)
+
+// Navigation between subgraphs
+const subgraphNav = useSubgraphNavigationStore()
+subgraphNav.enterSubgraph(subgraphId)
+subgraphNav.exitSubgraph()
+```
+
+**Key subgraph features:**
+- **Hierarchical Navigation**: Breadcrumb-based subgraph navigation
+- **Input/Output Mapping**: Automatic interface generation
+- **Reusable Components**: Export/import subgraph definitions
+- **Nested Subgraphs**: Support for multiple levels of nesting
+
+### Audio System Architecture
+
+Audio nodes and processing capabilities:
+
+```typescript
+// Audio service for handling audio operations
+const audioService = useAudioService()
+
+// Upload audio files
+const uploadAudio = (file: File) => {
+  return audioService.uploadAudio(file)
+}
+
+// Audio node functionality
+const audioNode = {
+  type: 'audio',
+  inputs: ['audio_input'],
+  outputs: ['audio_output'],
+  // Audio processing logic
+}
+```
+
+**Audio features:**
+- **Audio Upload**: Support for audio file uploads
+- **Audio Processing**: Node-based audio manipulation
+- **Format Support**: Multiple audio format compatibility
+
 ## Common Development Tasks
 
 ### Adding a New Feature
@@ -377,8 +502,18 @@ const { currentWorkflow, isExecuting } = storeToRefs(workflowStore)
 2. **Define settings** if configuration needed
 3. **Implement lifecycle hooks** as required
 4. **Add commands/keybindings** for user interaction
-5. **Test compatibility** with other extensions
-6. **Document extension APIs** and usage
+5. **Add bottom panel tabs** if UI extension needed
+6. **Test compatibility** with other extensions
+7. **Document extension APIs** and usage
+
+### Adding a Bottom Panel Tab
+
+1. **Create Vue component** for tab content
+2. **Define tab metadata** (id, title, icon)
+3. **Register via extension** or directly with store
+4. **Test tab functionality** and responsiveness
+5. **Add appropriate commands** for tab interaction
+6. **Consider Electron-specific features** if needed
 
 ### Adding a New Component
 
@@ -388,6 +523,26 @@ const { currentWorkflow, isExecuting } = storeToRefs(workflowStore)
 4. **Use TypeScript** with proper prop definitions
 5. **Implement tests** for component behavior
 6. **Add to component registry** if needed globally
+7. **Consider bottom panel integration** if UI extension needed
+8. **Update component READMEs** with new additions
+
+### Working with Subgraphs
+
+1. **Use subgraph service** for registration and management
+2. **Implement proper navigation** with breadcrumb system
+3. **Define clear interfaces** for input/output mapping
+4. **Test nested subgraph scenarios** thoroughly
+5. **Consider performance** with complex subgraph hierarchies
+6. **Document subgraph patterns** for reusability
+
+### Integrating Audio Features
+
+1. **Use audio service** for file operations
+2. **Implement proper validation** for audio formats
+3. **Handle audio processing** in background threads
+4. **Test audio upload functionality** across platforms
+5. **Consider audio quality** and compression settings
+6. **Document audio node interfaces** clearly
 
 ### Debugging Common Issues
 
@@ -480,6 +635,10 @@ test.describe('Node Interaction', () => {
 - **Clean up persistent state** between tests
 - **Prefer functional assertions** over screenshots
 - **Test in Linux environment** for CI compatibility
+- **Multi-user testing**: Use `--multi-user` flag for parallel tests
+- **Audio testing**: Test audio node functionality and upload capabilities
+- **Subgraph testing**: Test subgraph navigation and functionality
+- **Bottom panel testing**: Test extension tabs and terminal functionality
 
 ## Git and PR Guidelines
 

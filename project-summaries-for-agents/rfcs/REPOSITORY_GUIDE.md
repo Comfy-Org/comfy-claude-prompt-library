@@ -20,7 +20,7 @@ This repository manages the formal proposal process for significant changes to t
 ## Directory Structure
 
 ```
-/home/c_byrne/projects/comfyui-frontend-testing/rfcs/
+~/projects/comfyui-frontend-testing/rfcs/
 ├── 0000-template.md              # RFC template for new proposals
 ├── README.md                     # Process documentation and guidelines
 ├── rfcs/                         # Active and completed RFCs
