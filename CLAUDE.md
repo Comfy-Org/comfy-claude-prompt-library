@@ -30,7 +30,7 @@ This is a ONE-TIME check when you first understand the task scope. Don't repeat 
 CRITICAL: Before starting ANY new task, you MUST search through your previous conversations with this user:
 
 1. **Extract key terms** from the user's request (technologies, components, concepts)
-2. **Run semantic search**: `~/$USER/agents/semantic-memory-system/search.sh "extracted key terms"`
+2. **Run semantic search**: `~/agents/semantic-memory-system/search.sh "extracted key terms"`
 3. **Review results** and identify relevant past work
 4. **Present memory recap** to user showing what related work you've done before
 5. **Ask user** if they want to build on previous approaches or start fresh
@@ -74,6 +74,28 @@ When finding potentially related past sessions from conversation history:
 - IMPORTANT: Never add Co-Authored by Claude or any refrence to Claude or Claude Code in commit messages, PR descriptions, titles, or any documentation whatsoever.
 - When solving an issue we know the link/number for, we should add "Fixes #n" (where n is the issue number) to the PR description.
 - When running python, you must use `python3` to use the system installation of python. However, if you want to use packages that are unlikely to be installed on the system path or that you need specific versions for, first create a venv with python3 -m venv venv then activate it.
+
+## NO META-COMMENTARY COMMENTS
+
+CRITICAL: NEVER add comments that explain what you're doing to me during the session. These are FORBIDDEN in production code:
+
+FORBIDDEN EXAMPLES:
+- "// Moved login logic to AuthService" 
+- "// TODO: Refactor this old method"
+- "// This replaces the previous implementation"
+- "// Removed deprecated function that was here"
+- "// Updated to use new API"
+- "// Simplified this logic"
+- "// Fixed the bug mentioned above"
+
+These are conversational artifacts meant for our session that pollute the codebase. Code should be self-documenting or have comments that explain WHY something exists, not WHAT you just changed.
+
+ACCEPTABLE COMMENTS:
+- "// Validates user permissions before allowing access"
+- "// Performance optimization: cache results for 5 minutes"
+- "// Workaround for Safari bug #12345"
+
+If you need to communicate changes to me, do it in your response text, NOT in code comments.
 
 ## Code Quality Standards
 
