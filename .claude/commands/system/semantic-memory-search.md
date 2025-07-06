@@ -13,7 +13,7 @@ You are accessing your shared memory with this user for the task: $ARGUMENTS
 
 2. **Search Semantic Memory**
    ```bash
-   ~/agents/semantic-memory-system/search.sh "your extracted search terms"
+   [path-to-claude-code-vector-memory]/search.sh "your extracted search terms"
    ```
 
 3. **Review Results**

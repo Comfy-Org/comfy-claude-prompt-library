@@ -30,7 +30,9 @@ This is a ONE-TIME check when you first understand the task scope. Don't repeat 
 CRITICAL: Before starting ANY new task, you MUST search through your previous conversations with this user:
 
 1. **Extract key terms** from the user's request (technologies, components, concepts)
-2. **Run semantic search**: `~/agents/semantic-memory-system/search.sh "extracted key terms"`
+2. **Run semantic search**: Use the [claude-code-vector-memory](https://github.com/christian-byrne/claude-code-vector-memory) search tool
+   - If installed, run: `[path-to-claude-code-vector-memory]/search.sh "extracted key terms"`
+   - Common installation paths: `~/claude-code-vector-memory/`, `~/agents/claude-code-vector-memory/`
 3. **Review results** and identify relevant past work
 4. **Present memory recap** to user showing what related work you've done before
 5. **Ask user** if they want to build on previous approaches or start fresh

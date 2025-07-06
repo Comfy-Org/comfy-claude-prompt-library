@@ -25,7 +25,7 @@ The user has curated specific research materials in knowledge folders for import
 3. **MEMORY SYSTEM INTEGRATION**
    <memory_check>
    Before analyzing new materials:
-   - Run: `~/agents/semantic-memory-system/search.sh "[current folder name]"`
+   - Run: `[path-to-claude-code-vector-memory]/search.sh "[current folder name]"`
    - Check for previous analyses of this topic
    - Present memory recap of related past work if found
    - Ask user if they want to build upon or start fresh from previous findings

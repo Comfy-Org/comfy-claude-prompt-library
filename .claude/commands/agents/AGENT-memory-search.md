@@ -31,7 +31,9 @@ Example:
 
 ### 3. Execute Semantic Search
 ```bash
-cd ~/semantic-memory-system
+# Navigate to claude-code-vector-memory installation
+# (Common paths: ~/claude-code-vector-memory, ~/agents/claude-code-vector-memory)
+cd [path-to-claude-code-vector-memory]
 source venv/bin/activate
 
 # Run multiple searches
