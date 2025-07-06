@@ -1,0 +1,6 @@
+{
+  "/path/to/your/project1": "project1-folder-name",
+  "/path/to/your/project2": "project2-folder-name",
+  "/path/to/ComfyUI": "ComfyUI",
+  "/path/to/ComfyUI_frontend": "ComfyUI_frontend"
+}

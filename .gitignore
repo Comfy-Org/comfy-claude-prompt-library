@@ -19,3 +19,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# User-specific configuration
+project-summaries-for-agents/filepath-mapping.json

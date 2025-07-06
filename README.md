@@ -120,6 +120,13 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 1. Clone this repository
 2. Commands are automatically available in your Claude Code session when working in this project
 3. To make commands globally available, copy desired command files to `~/.claude/commands/`
+4. **Set up filepath mapping** (required for repository analysis commands):
+   ```bash
+   cd project-summaries-for-agents
+   cp filepath-mapping.json.template filepath-mapping.json
+   # Edit filepath-mapping.json with your local repository paths
+   ```
+   See [project-summaries-for-agents/README.md](project-summaries-for-agents/README.md) for details.
 
 ## Creating New Commands
 
