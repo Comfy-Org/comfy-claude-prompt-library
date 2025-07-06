@@ -111,6 +111,14 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:review-technical`](.claude/commands/blog/review-technical.md) - Review technical accuracy of blog posts
 - [`/user:write-draft`](.claude/commands/blog/write-draft.md) - Write first drafts of blog posts
 
+### Validation Commands
+
+#### Frontend Validation
+
+- [`/user:scan-comfy-conventions`](.claude/commands/validation/frontend/scan-comfy-conventions.md) - Check ComfyUI-specific patterns and PrimeVue usage
+- [`/user:scan-performance-reactivity`](.claude/commands/validation/frontend/scan-performance-reactivity.md) - Validate Vue performance and reactivity patterns
+- [`/user:scan-vue-patterns`](.claude/commands/validation/frontend/scan-vue-patterns.md) - Check Vue 3 best practices and anti-patterns
+
 ### Minor Precautions
 
 - [`/user:careful-of-refactor-between-msgs`](.claude/commands/minor-precautions/careful-of-refactor-between-msgs.md) - Reminder to be careful about refactoring between messages
