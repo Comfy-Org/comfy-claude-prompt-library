@@ -120,7 +120,10 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 1. Clone this repository
 2. Commands are automatically available in your Claude Code session when working in this project
 3. To make commands globally available, copy desired command files to `~/.claude/commands/`
-4. **Set up filepath mapping** (required for repository analysis commands):
+4. **Install Gemini CLI** (required for large context analysis tasks):
+   - Install from [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)
+   - Used automatically for tasks exceeding Claude's context window
+5. **Set up filepath mapping** (required for repository analysis commands):
    ```bash
    cd project-summaries-for-agents
    cp filepath-mapping.json.template filepath-mapping.json
