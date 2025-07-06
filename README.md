@@ -130,6 +130,11 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
    # Edit filepath-mapping.json with your local repository paths
    ```
    See [project-summaries-for-agents/README.md](project-summaries-for-agents/README.md) for details.
+6. **Install semantic-memory-system** (required for memory integration and search):
+   - The semantic memory system is required for searching through past conversations
+   - Install from: [semantic-memory-system repository](https://github.com/yourusername/semantic-memory-system) 
+   - Ensure `~/agents/semantic-memory-system/search.sh` is executable
+   - Used by memory-related commands and CLAUDE.md's mandatory memory integration
 
 ## Creating New Commands
 
