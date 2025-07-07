@@ -51,8 +51,8 @@ jobs:
                 echo "  ✅ Uses \$ARGUMENTS parameter"
             fi
             
-            # Check for basic markdown syntax issues
-            if grep -q '^#[^# ]' "$file"; then
+            # Check for basic markdown syntax issues (excluding shebangs)
+            if grep -q '^#[^# !]' "$file"; then
                 echo "  ⚠️  Potential heading formatting issue (missing space after #)"
                 ((ERRORS++))
             fi
