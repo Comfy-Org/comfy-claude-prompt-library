@@ -28,6 +28,7 @@ Handle branching based on current state:
 **If already on a clean feature branch:**
 - Verify the branch name is descriptive and appropriate
 - Ensure it's based on the latest main/master
+- Ensure this clean branch does not mix seemingly unrelated changes
 
 ### 3. Commit Creation
 Create a meaningful commit:
