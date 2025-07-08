@@ -138,6 +138,15 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
    # Edit filepath-mapping.json with your local repository paths
    ```
    See [project-summaries-for-agents/README.md](project-summaries-for-agents/README.md) for details.
+6. **Install claude-code-vector-memory** (required for memory integration and search):
+   - The semantic memory system is required for searching through past conversations
+   - Install from: [claude-code-vector-memory repository](https://github.com/christian-byrne/claude-code-vector-memory)
+   - After cloning the repository, navigate to the semantic-memory-system directory and run the setup script:
+     ```bash
+     cd claude-code-vector-memory/semantic-memory-system
+     ./setup.sh
+     ```
+   - The setup script will create a virtual environment, install dependencies, build the initial index, and run a health check
 
 ## Creating New Commands
 
