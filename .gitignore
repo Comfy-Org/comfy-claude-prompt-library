@@ -22,3 +22,8 @@ Thumbs.db
 
 # User-specific configuration
 project-summaries-for-agents/filepath-mapping.json
+
+# Environment-specific content that should never be tracked
+.claude/archive/
+.claude/*.cache.json
+.claude/.channels_cache.json
