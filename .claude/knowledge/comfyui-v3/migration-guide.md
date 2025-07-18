@@ -102,16 +102,31 @@ NODES_LIST = [APG]  # ... at end of file
 
 ### Step 3: Converting I/O
 
-| V1 Type Tuple           | V3 Input Class                                    | V1 Options -> V3 Kwargs                               |
-| ----------------------- | ------------------------------------------------- | ----------------------------------------------------- |
-| `("STRING", opts)`      | `io.String.Input(id, **opts)`                     | `multiline`, `dynamicPrompts`, `default`, `placeholder` |
-| `("INT", opts)`         | `io.Int.Input(id, **opts)`                        | `default`, `min`, `max`, `step`, `display_mode`, `control_after_generate` |
-| `("FLOAT", opts)`       | `io.Float.Input(id, **opts)`                      | `default`, `min`, `max`, `step`, `round`                |
-| `("BOOLEAN", opts)`     | `io.Boolean.Input(id, **opts)`                    | `default`, `label_on`, `label_off`                      |
-| `(["opt1", "opt2"],)`   | `io.Combo.Input(id, options=["opt1", "opt2"])`    | `default`, `upload`, `image_folder`, `remote`         |
-| `("IMAGE",)`            | `io.Image.Input(id)`                              | N/A                                                   |
-| `("MASK",)`             | `io.Mask.Input(id)`                               | N/A                                                   |
-| `("*",)` or `(IO.ANY,)` | `io.AnyType.Input(id)`                            | N/A                                                   |
+| V1 Type (`string`) | V3 Class (`io.<Type>`) | Common `Input()` Options (as keyword arguments)                           |
+|:-------------------|:-----------------------|:--------------------------------------------------------------------------|
+| `STRING`           | `io.String`            | `default`, `multiline`, `dynamic_prompts`, `placeholder`                  |
+| `INT`              | `io.Int`               | `default`, `min`, `max`, `step`, `display_mode`, `control_after_generate` |
+| `FLOAT`            | `io.Float`             | `default`, `min`, `max`, `step`, `round`, `display_mode`                  |
+| `BOOLEAN`          | `io.Boolean`           | `default`, `label_on`, `label_off`                                        |
+| `COMBO`            | `io.Combo`             | `options`, `default`, `upload`, `image_folder`, `remote`                  |
+| (custom)           | `io.MultiCombo`        | `options`, `default`, `placeholder`, `chip`                               |
+| `IMAGE`            | `io.Image`             |                                                                           |
+| `MASK`             | `io.Mask`              |                                                                           |
+| `LATENT`           | `io.Latent`            |                                                                           |
+| `CONDITIONING`     | `io.Conditioning`      |                                                                           |
+| `CLIP`             | `io.Clip`              |                                                                           |
+| `VAE`              | `io.Vae`               |                                                                           |
+| `MODEL`            | `io.Model`             |                                                                           |
+| `CONTROL_NET`      | `io.ControlNet`        |                                                                           |
+| `SAMPLER`          | `io.Sampler`           |                                                                           |
+| `SIGMAS`           | `io.Sigmas`            |                                                                           |
+| `GUIDER`           | `io.Guider`            |                                                                           |
+| `CLIP_VISION`      | `io.ClipVision`        |                                                                           |
+| `UPSCALE_MODEL`    | `io.UpscaleModel`      |                                                                           |
+| `AUDIO`            | `io.Audio`             |                                                                           |
+| `VIDEO`            | `io.Video`             |                                                                           |
+| `WEBCAM`           | `io.Webcam`            | `default`, `socketless`                                                   |
+| `*`                | `io.AnyType`           | Used for inputs that can accept any type, like the PreviewAny node.       |
 
 #### Advanced Input Types
 
