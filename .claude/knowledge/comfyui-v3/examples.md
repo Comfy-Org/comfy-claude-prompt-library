@@ -14,7 +14,7 @@ class ImageInvertV3(ComfyNodeV3):
     """Simple node that inverts image colors."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="ImageInvert_v3",
             display_name="Invert Image",
@@ -42,7 +42,7 @@ class MathOperationV3(ComfyNodeV3):
     """Performs math operations on two values."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="MathOperation_v3",
             display_name="Math Operation",
@@ -79,13 +79,12 @@ class MathOperationV3(ComfyNodeV3):
 
 ```python
 import aiohttp
-import json
 
 class TextGeneratorV3(ComfyNodeV3):
     """Generates text using external API."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="TextGenerator_v3",
             display_name="AI Text Generator",
@@ -130,7 +129,7 @@ class BatchImageProcessorV3(ComfyNodeV3):
     """Processes images in batch with progress tracking."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="BatchImageProcessor_v3",
             display_name="Batch Image Processor",
@@ -180,7 +179,7 @@ class CheckpointLoaderV3(ComfyNodeV3):
     """Loads checkpoint models with caching."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="CheckpointLoader_v3",
             display_name="Load Checkpoint",
@@ -221,7 +220,7 @@ class IterativeRefinerV3(ComfyNodeV3):
     """Refines images iteratively with state tracking."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="IterativeRefiner_v3",
             display_name="Iterative Refiner",
@@ -285,7 +284,7 @@ class ImageBlenderV3(ComfyNodeV3):
     """Blends multiple images with weights."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="ImageBlender_v3",
             display_name="Image Blender",
@@ -344,7 +343,7 @@ class UniversalInverterV3(ComfyNodeV3):
     """Inverts images, masks, or conditioning."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="UniversalInverter_v3",
             display_name="Universal Inverter",
@@ -410,14 +409,13 @@ share_torch: true
 # __init__.py
 from comfy_api.v3 import io, ComfyNodeV3, SchemaV3
 import numpy as np
-from scipy import signal
 from skimage import filters
 
 class ScientificProcessorV3(ComfyNodeV3):
     """Image processing with scientific libraries."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="ScientificProcessor_v3",
             display_name="Scientific Processor",
@@ -492,7 +490,7 @@ class TextToImageWorkflowV3(ComfyNodeV3):
     """Complete text-to-image workflow in one node."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
             node_id="TextToImageWorkflow_v3",
             display_name="Text to Image Workflow",
@@ -530,9 +528,7 @@ class TextToImageWorkflowV3(ComfyNodeV3):
     async def execute(cls, positive_prompt, negative_prompt, model, clip, vae,
                       seed, steps, cfg, sampler_name, scheduler,
                       width, height, batch_size):
-        import comfy.sample
         import comfy.samplers
-        import latent_preview
         
         # Encode prompts
         positive_cond = clip.encode_from_text(positive_prompt)

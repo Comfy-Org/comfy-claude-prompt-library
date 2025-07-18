@@ -16,19 +16,29 @@ class ComfyNodeV3:
     state: NodeState          # Persistent state storage
     resources: Resources      # Resource loader with caching
     hidden: HiddenHolder      # Access to hidden inputs
-    
+
     @classmethod
     @abstractmethod
-    def DEFINE_SCHEMA(cls) -> SchemaV3:
+    def define_schema(cls) -> SchemaV3:
         """Define node schema. Must be overridden."""
         pass
-    
+
     @classmethod
     @abstractmethod
     def execute(cls, **kwargs) -> NodeOutput:
         """Execute node logic. Can be async."""
         pass
-    
+
+    @classmethod
+    def validate_inputs(cls, **kwargs) -> bool:
+        """Optional: Validate inputs before execution."""
+        pass
+
+    @classmethod
+    def fingerprint_inputs(cls, **kwargs) -> Any:
+        """Optional: Generate a fingerprint for caching."""
+        pass
+
     @classmethod
     def GET_SERIALIZERS(cls) -> list[Serializer]:
         """Optional: Define custom serializers."""
@@ -59,12 +69,12 @@ class SchemaV3:
 
 ### NodeOutput
 
-Structured return value from execute.
+Structured return value from `execute`.
 
 ```python
 class NodeOutput:
     def __init__(
-        self, 
+        self,
         *args: Any,                    # Output values
         ui: UIOutput | dict = None,    # UI elements
         expand: dict = None,           # Subgraph expansion
@@ -91,7 +101,8 @@ io.Int.Input(
     step: int = None,
     control_after_generate: bool = None,
     display_mode: NumberDisplay = None,
-    socketless: bool = None
+    socketless: bool = None,
+    force_input: bool = None
 )
 
 # Float input
@@ -107,7 +118,8 @@ io.Float.Input(
     step: float = None,
     round: float = None,
     display_mode: NumberDisplay = None,
-    socketless: bool = None
+    socketless: bool = None,
+    force_input: bool = None
 )
 
 # String input
@@ -120,7 +132,9 @@ io.String.Input(
     multiline: bool = False,
     placeholder: str = None,
     default: str = None,
-    socketless: bool = None
+    dynamic_prompts: bool = None,
+    socketless: bool = None,
+    force_input: bool = None
 )
 
 # Boolean input
@@ -133,7 +147,8 @@ io.Boolean.Input(
     default: bool = None,
     label_on: str = None,
     label_off: str = None,
-    socketless: bool = None
+    socketless: bool = None,
+    force_input: bool = None
 )
 
 # Combo (dropdown) input
@@ -146,7 +161,7 @@ io.Combo.Input(
     lazy: bool = None,
     default: str = None,
     control_after_generate: bool = None,
-    image_upload: bool = None,
+    upload: UploadType = None,
     image_folder: FolderType = None,
     remote: RemoteOptions = None,
     socketless: bool = None
@@ -193,11 +208,16 @@ io.ClipVisionOutput.Input(id, ...)   # Type: ClipVisionOutput
 io.StyleModel.Input(id, ...)         # Type: StyleModel
 io.Gligen.Input(id, ...)             # Type: ModelPatcher
 io.UpscaleModel.Input(id, ...)       # Type: ImageModelDescriptor
-io.Audio.Input(id, ...)              # Type: dict with waveform
+io.Audio.Input(id, ...)              # Type: dict with 'waveform' and 'sample_rate'
 io.Video.Input(id, ...)              # Type: VideoInput
+io.Webcam.Input(id, ...)             # Type: str (filepath)
+io.WanCameraEmbedding.Input(id, ...) # Type: torch.Tensor
 io.LoraModel.Input(id, ...)          # Type: dict[str, Tensor]
 io.Hooks.Input(id, ...)              # Type: HookGroup
 io.HookKeyframes.Input(id, ...)      # Type: HookKeyframeGroup
+io.SVG.Input(id, ...)                # Type: SVG (custom class)
+io.Voxel.Input(id, ...)              # Type: Voxel data (custom class)
+io.Mesh.Input(id, ...)               # Type: Mesh data (custom class)
 ```
 
 ### Advanced Inputs
@@ -214,7 +234,7 @@ io.MultiType.Input(
 )
 
 # Dynamic growing input
-io.AutoGrowDynamicInput(
+io.AutogrowDynamic.Input(
     id: str,
     template_input: InputV3,  # Template for each new input
     min: int = 1,             # Minimum inputs
@@ -236,7 +256,7 @@ class MyCustom:
 ```python
 # Basic output
 io.Image.Output(
-    id: str,
+    id: str = None,
     display_name: str = None,
     tooltip: str = None,
     is_output_list: bool = False  # Output is list
@@ -265,7 +285,7 @@ from comfy_api.v3 import Hidden
 Hidden.unique_id            # Node's unique ID
 Hidden.prompt              # Complete prompt
 Hidden.extra_pnginfo       # PNG metadata dict
-Hidden.dynprompt           # Dynamic prompt
+Hidden.dynprompt           # Dynamic prompt object
 Hidden.auth_token_comfy_org # ComfyOrg auth token
 Hidden.api_key_comfy_org   # ComfyOrg API key
 
@@ -289,11 +309,11 @@ class NodeState:
     def set_value(self, key: str, value: Any)
     def pop(self, key: str) -> Any
     def __contains__(self, key: str) -> bool
-    
+
     # Attribute access
     cls.state.my_value = 42
     value = cls.state.my_value
-    
+
     # Dictionary access
     cls.state["key"] = "value"
     value = cls.state["key"]
@@ -339,6 +359,15 @@ io.Image.Output(
     display_name="Generated Image",
     tooltip="The final generated image based on your prompt"
 )
+
+# Combo with dynamic options and file upload
+io.Combo.Input(
+    "audio_file",
+    options=sorted(folder_paths.filter_files_content_types(os.listdir(folder_paths.get_input_directory()), ["audio", "video"])),
+    display_name="Audio File",
+    tooltip="Select an audio file or upload a new one",
+    upload=io.UploadType.audio
+)
 ```
 
 ### Return Pattern with NodeOutput
@@ -349,15 +378,15 @@ def execute(cls, text: str, count: int) -> io.NodeOutput:
     # Single output
     result = process_text(text, count)
     return io.NodeOutput(result)
-    
+
     # Multiple outputs
     image, mask = generate_image_and_mask(text)
     return io.NodeOutput(image, mask)
-    
+
     # With UI preview
     image = generate_image(text)
     return io.NodeOutput(image, ui=ui.PreviewImage(image))
-    
+
     # With multiple UI elements
     images = batch_generate(text, count)
     previews = [ui.PreviewImage(img) for img in images]
@@ -474,10 +503,10 @@ import torch
 
 class AdvancedNodeV3(ComfyNodeV3):
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return SchemaV3(
-            node_id="AdvancedNode_v3",
-            display_name="Advanced Node (V3)",
+            node_id="AdvancedNode",
+            display_name="Advanced Node",
             category="examples/advanced",
             description="Demonstrates v3 features",
             inputs=[
@@ -501,7 +530,7 @@ class AdvancedNodeV3(ComfyNodeV3):
                 ),
                 
                 # Dynamic
-                io.AutoGrowDynamicInput("extra_images",
+                io.AutoGrowDynamic.Input("extra_images",
                     template_input=io.Image.Input("img"),
                     min=0,
                     max=5
@@ -549,7 +578,7 @@ class AdvancedNodeV3(ComfyNodeV3):
         )
     
     @classmethod
-    async def VALIDATE_INPUTS(cls, strength, **kwargs):
+    async def fingerprint_inputs(cls, strength, **kwargs):
         if strength < 0.1:
             return "Strength too low for good results"
         return True
@@ -563,7 +592,7 @@ class AdvancedNodeV3(ComfyNodeV3):
 |---------|------------|--------------|
 | `io.Image.Type` | `torch.Tensor` | `[B,H,W,C]` float32 0-1 |
 | `io.Mask.Type` | `torch.Tensor` | `[H,W]` or `[B,H,W]` float32 |
-| `io.Latent.Type` | `dict` | `{"samples": tensor}` |
+| `io.Latent.Type` | `dict` | `{"samples": tensor, ...}` |
 | `io.Conditioning.Type` | `list` | `[(tensor, dict), ...]` |
 | `io.Audio.Type` | `dict` | `{"waveform": tensor, "sample_rate": int}` |
 | `io.Int.Type` | `int` | Python integer |
@@ -577,9 +606,16 @@ class AdvancedNodeV3(ComfyNodeV3):
 # Number display modes
 io.NumberDisplay.number  # Standard input
 io.NumberDisplay.slider  # Slider widget
+io.NumberDisplay.color   # Color picker widget
 
 # Folder types
 io.FolderType.input   # Input folder
-io.FolderType.output  # Output folder  
+io.FolderType.output  # Output folder
 io.FolderType.temp    # Temp folder
+
+# Upload types
+io.UploadType.image
+io.UploadType.audio
+io.UploadType.video
+io.UploadType.model
 ```
