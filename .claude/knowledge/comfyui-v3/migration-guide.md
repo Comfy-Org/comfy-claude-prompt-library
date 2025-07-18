@@ -2,137 +2,151 @@
 
 This guide helps developers migrate existing v1 nodes to the new v3 schema and take advantage of async execution and process isolation.
 
-## Quick Start
+## Quick Start: The Core Changes
 
-### Minimal v3 Node
-
-```python
-from comfy_api.v3 import io, ComfyNodeV3, SchemaV3
-
-class MinimalNodeV3(ComfyNodeV3):
-    @classmethod
-    def DEFINE_SCHEMA(cls):
-        return SchemaV3(
-            node_id="MinimalNode",
-            display_name="Minimal Node",
-            category="examples",
-            inputs=[
-                io.Image.Input("image"),
-                io.Float.Input("strength", default=1.0, min=0.0, max=1.0)
-            ],
-            outputs=[
-                io.Image.Output("result")
-            ]
-        )
-    
-    @classmethod
-    def execute(cls, image, strength):
-        # Process image
-        result = image * strength
-        return io.NodeOutput(result)
-```
+1.  **Inherit from `io.ComfyNodeV3`**: Your node class now subclasses `io.ComfyNodeV3`.
+2.  **Use `define_schema`**: All metadata (`INPUT_TYPES`, `CATEGORY`, etc.) moves into a single `@classmethod def define_schema(cls)` that returns an `io.SchemaV3` object.
+3.  **Use `execute`**: The main logic function is now always a `@classmethod def execute(cls, ...)` method.
+4.  **Use Typed I/O**: Inputs and outputs are now strongly-typed objects from the `io` module (e.g., `io.Image.Input(...)`).
+5.  **Return `NodeOutput`**: The `execute` method must return an `io.NodeOutput` instance.
+6.  **Use `NODES_LIST`**: Node registration is done by adding the class to a `NODES_LIST` at the end of the file, replacing `NODE_CLASS_MAPPINGS` and `NODE_DISPLAY_NAME_MAPPINGS`.
 
 ## Step-by-Step Migration
 
-### Step 1: Convert INPUT_TYPES
+### Step 1: Class Definition and Schema
 
 **V1:**
+```python
+class Canny:
+    CATEGORY = "image/preprocessors"
+    FUNCTION = "detect_edge"
+    RETURN_TYPES = ("IMAGE",)
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {
+            "image": ("IMAGE",),
+            "low_threshold": ("FLOAT", {"default": 0.4}),
+            "high_threshold": ("FLOAT", {"default": 0.8}),
+        }}
+    
+    def detect_edge(self, image, low_threshold, high_threshold):
+        # ... logic ...
+        return (img_out,)
+
+NODE_CLASS_MAPPINGS = {"Canny": Canny}
+```
+
+**V3:**
+```python
+from comfy_api.v3 import io
+
+class Canny(io.ComfyNodeV3):
+    @classmethod
+    def define_schema(cls):
+        return io.SchemaV3(
+            node_id="Canny_V3",
+            category="image/preprocessors",
+            inputs=[
+                io.Image.Input("image"),
+                io.Float.Input("low_threshold", default=0.4),
+                io.Float.Input("high_threshold", default=0.8),
+            ],
+            outputs=[io.Image.Output()],
+        )
+    
+    @classmethod
+    def execute(cls, image, low_threshold, high_threshold):
+        # ... logic ...
+        return io.NodeOutput(img_out)
+
+NODES_LIST = [Canny]
+```
+
+### Step 2: Naming and Registration (`node_id`, `display_name`, `NODES_LIST`)
+
+This is a critical step for ensuring your V3 node coexists with or replaces the V1 version correctly.
+
+1.  **Remove Old Mappings**: Delete the `NODE_CLASS_MAPPINGS` and `NODE_DISPLAY_NAME_MAPPINGS` dictionaries.
+2.  **Create `NODES_LIST`**: Create a new list called `NODES_LIST` and add your V3 class to it.
+3.  **Set `node_id`**: The `node_id` in `SchemaV3` **must** be the key from the old `NODE_CLASS_MAPPINGS`.
+4.  **Set `display_name` (Conditionally)**:
+    -   Check if a key existed in the old `NODE_DISPLAY_NAME_MAPPINGS`.
+    -   **If yes**: Set `display_name` to that value.
+    -   **If no**: **Omit** the `display_name` parameter from `SchemaV3` entirely.
+
+**Example:**
+
+**V1 Registration:**
+```python
+NODE_CLASS_MAPPINGS = {
+    "APG": APG,
+}
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "APG": "Adaptive Projected Guidance",
+}
+```
+
+**V3 `define_schema`:**
 ```python
 @classmethod
-def INPUT_TYPES(s):
-    return {
-        "required": {
-            "image": ("IMAGE",),
-            "model": ("MODEL",),
-            "steps": ("INT", {"default": 20, "min": 1, "max": 10000}),
-            "cfg": ("FLOAT", {"default": 8.0, "min": 0.0, "max": 100.0, "step": 0.1}),
-            "sampler_name": (comfy.samplers.KSampler.SAMPLERS,),
-        },
-        "optional": {
-            "mask": ("MASK",),
-        }
-    }
+def define_schema(cls):
+    return io.SchemaV3(
+        node_id="APG_V3", # From MAPPINGS key + "_V3"
+        display_name="Adaptive Projected Guidance _V3", # From DISPLAY MAPPINGS value + " _V3"
+        # ... other parameters
+    )
+
+NODES_LIST = [APG]  # ... at end of file
 ```
 
-**V3:**
+### Step 3: Converting I/O
+
+| V1 Type Tuple           | V3 Input Class                                    | V1 Options -> V3 Kwargs                               |
+| ----------------------- | ------------------------------------------------- | ----------------------------------------------------- |
+| `("STRING", opts)`      | `io.String.Input(id, **opts)`                     | `multiline`, `dynamicPrompts`, `default`, `placeholder` |
+| `("INT", opts)`         | `io.Int.Input(id, **opts)`                        | `default`, `min`, `max`, `step`, `display_mode`, `control_after_generate` |
+| `("FLOAT", opts)`       | `io.Float.Input(id, **opts)`                      | `default`, `min`, `max`, `step`, `round`                |
+| `("BOOLEAN", opts)`     | `io.Boolean.Input(id, **opts)`                    | `default`, `label_on`, `label_off`                      |
+| `(["opt1", "opt2"],)`   | `io.Combo.Input(id, options=["opt1", "opt2"])`    | `default`, `upload`, `image_folder`, `remote`         |
+| `("IMAGE",)`            | `io.Image.Input(id)`                              | N/A                                                   |
+| `("MASK",)`             | `io.Mask.Input(id)`                               | N/A                                                   |
+| `("*",)` or `(IO.ANY,)` | `io.AnyType.Input(id)`                            | N/A                                                   |
+
+#### Advanced Input Types
+
+**MultiType Input (accepts multiple types):**
 ```python
-inputs=[
-    io.Image.Input("image"),
-    io.Model.Input("model"),
-    io.Int.Input("steps", default=20, min=1, max=10000),
-    io.Float.Input("cfg", default=8.0, min=0.0, max=100.0, step=0.1),
-    io.Combo.Input("sampler_name", options=comfy.samplers.KSampler.SAMPLERS),
-    io.Mask.Input("mask", optional=True),
-]
+io.MultiType.Input("input", types=[io.Mask, io.Float, io.Int], optional=True)
 ```
 
-### Step 2: Convert RETURN_TYPES
-
-**V1:**
+**Combo with Remote Options:**
 ```python
-RETURN_TYPES = ("IMAGE", "LATENT")
-RETURN_NAMES = ("images", "latents")
-OUTPUT_TOOLTIPS = ("Generated images", "Latent representation")
-```
-
-**V3:**
-```python
-outputs=[
-    io.Image.Output("images", tooltip="Generated images"),
-    io.Latent.Output("latents", tooltip="Latent representation")
-]
-```
-
-### Step 3: Convert Metadata
-
-**V1:**
-```python
-FUNCTION = "sample"
-CATEGORY = "sampling"
-OUTPUT_NODE = True
-DEPRECATED = False
-EXPERIMENTAL = True
-```
-
-**V3:**
-```python
-return SchemaV3(
-    node_id="KSampler",
-    category="sampling",
-    is_output_node=True,
-    is_deprecated=False,
-    is_experimental=True,
-    # FUNCTION is always "execute" in v3
+io.Combo.Input(
+    "lora_name",
+    options=folder_paths.get_filename_list("loras"),
+    tooltip="The name of the LoRA."
 )
 ```
 
-### Step 4: Convert Execute Method
-
-**V1:**
+**Optional Parameters:**
 ```python
-def sample(self, model, image, steps, cfg, sampler_name, mask=None):
-    # Instance method with self
-    if hasattr(self, 'device'):
-        device = self.device
-    else:
-        device = model_management.get_torch_device()
-    
-    # Process...
-    return (images, latent)
+io.Boolean.Input(
+    "case_sensitive",
+    default=True,
+    optional=True,  # Makes this input optional
+    tooltip="Whether to use case-sensitive matching"
+)
 ```
 
-**V3:**
-```python
-@classmethod
-def execute(cls, model, image, steps, cfg, sampler_name, mask=None):
-    # Class method with cls
-    # Use state for instance variables
-    if cls.state.device is None:
-        cls.state.device = model_management.get_torch_device()
-    
-    # Process...
-    return io.NodeOutput(images, latent)
-```
+
+### Step 4: Migrating Logic
+
+-   **Execution Method**: Rename your old `FUNCTION` to `execute` and make it a `@classmethod`.
+-   **Return Value**: Wrap your return tuple in `io.NodeOutput()`. For UI updates, use the `ui` keyword argument: `io.NodeOutput(ui=ui.PreviewImage(image))`.
+-   **State**: Replace `self.variable` with `cls.state.variable`.
+-   **Hidden Inputs**: Replace `prompt` and `unique_id` parameters with `cls.hidden.prompt` and `cls.hidden.unique_id`. Request them in the schema with `hidden=[io.Hidden.prompt, io.Hidden.unique_id]`.
+-   **Optional Methods**: `IS_CHANGED` becomes `fingerprint_inputs`, and `VALIDATE_INPUTS` becomes `validate_inputs`. Both should be `@classmethod`.
 
 ## Common Migration Patterns
 
@@ -146,7 +160,7 @@ def execute(cls, model, image, steps, cfg, sampler_name, mask=None):
 }
 
 def execute(self, ..., prompt=None, unique_id=None):
-    # Use hidden inputs
+    ...  # Use hidden inputs
 ```
 
 **V3:**
@@ -158,7 +172,7 @@ hidden=[
 
 @classmethod
 def execute(cls, ...):
-    # Access via cls.hidden
+    # Access via **cls**
     prompt = cls.hidden.prompt
     unique_id = cls.hidden.unique_id
 ```
@@ -219,7 +233,7 @@ def INPUT_TYPES(s):
 **V3:**
 ```python
 inputs=[
-    io.AutoGrowDynamicInput("images", 
+    io.AutoGrowDynamic.Input("images", 
         template_input=io.Image.Input("image"),
         min=1,
         max=10
@@ -239,6 +253,8 @@ def execute(self, model_name):
 
 **V3:**
 ```python
+from comfy_api.v3 import resources
+
 @classmethod
 def execute(cls, model_name):
     # Cached resource loading
@@ -356,7 +372,7 @@ class StringConcatenate(io.ComfyNodeV3):
     """Concatenates two strings with an optional delimiter between them."""
     
     @classmethod
-    def DEFINE_SCHEMA(cls):
+    def define_schema(cls):
         return io.SchemaV3(
             node_id="StringConcatenate",
             display_name="String Concatenate",
@@ -397,82 +413,6 @@ class StringConcatenate(io.ComfyNodeV3):
         """Concatenates two strings with an optional delimiter."""
         result = delimiter.join((string_a, string_b))
         return io.NodeOutput(result)
-```
-
-### Module-Level Registration
-
-When creating a standalone v3 node module (not using pyisolate), register nodes at the module level:
-
-```python
-# nodes_string.py
-import re
-from comfy_api.v3 import io
-
-class StringConcatenate(io.ComfyNodeV3):
-    # ... node implementation ...
-
-class StringReplace(io.ComfyNodeV3):
-    # ... node implementation ...
-
-class RegexMatch(io.ComfyNodeV3):
-    # ... node implementation ...
-
-# CRITICAL: Module-level registration for v3 nodes
-NODE_CLASS_MAPPINGS = {
-    "StringConcatenate": StringConcatenate,
-    "StringReplace": StringReplace,
-    "RegexMatch": RegexMatch,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "StringConcatenate": "Concatenate",
-    "StringReplace": "Replace",
-    "RegexMatch": "Regex Match",
-}
-```
-
-### Complete Type Mapping Reference
-
-| V1 Type | V3 Input Type | V3 Output Type | Notes |
-|---------|---------------|----------------|--------|
-| ("STRING",) | io.String.Input() | io.String.Output() | Supports multiline parameter |
-| ("INT",) | io.Int.Input() | io.Int.Output() | Supports min, max, default |
-| ("FLOAT",) | io.Float.Input() | io.Float.Output() | Supports min, max, step, default |
-| ("BOOLEAN",) | io.Boolean.Input() | io.Boolean.Output() | Supports default |
-| (["opt1", "opt2"],) | io.Combo.Input(options=[...]) | - | For dropdown selections |
-| ("IMAGE",) | io.Image.Input() | io.Image.Output() | |
-| ("MASK",) | io.Mask.Input() | io.Mask.Output() | |
-| ("MODEL",) | io.Model.Input() | io.Model.Output() | |
-| ("CLIP",) | io.Clip.Input() | io.Clip.Output() | |
-| ("VAE",) | io.Vae.Input() | io.Vae.Output() | |
-| ("CONDITIONING",) | io.Conditioning.Input() | io.Conditioning.Output() | |
-| ("LATENT",) | io.Latent.Input() | io.Latent.Output() | |
-| Multiple types | io.MultiType.Input(types=[...]) | - | Accept multiple input types |
-
-### Advanced Input Types
-
-**MultiType Input (accepts multiple types):**
-```python
-io.MultiType.Input("input", types=[io.Mask, io.Float, io.Int], optional=True)
-```
-
-**Combo with Remote Options:**
-```python
-io.Combo.Input(
-    "lora_name",
-    options=folder_paths.get_filename_list("loras"),
-    tooltip="The name of the LoRA."
-)
-```
-
-**Optional Parameters:**
-```python
-io.Boolean.Input(
-    "case_sensitive",
-    default=True,
-    optional=True,  # Makes this input optional
-    tooltip="Whether to use case-sensitive matching"
-)
 ```
 
 ### Replacing V1 Nodes Strategy

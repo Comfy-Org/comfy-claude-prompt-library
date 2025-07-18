@@ -1,22 +1,22 @@
 # ComfyUI v3 Node Schema
 
-The v3 schema represents a complete redesign of how nodes are defined in ComfyUI, moving from a dictionary-based system to an object-oriented approach with strong typing.
+The v3 schema represents a complete redesign of how nodes are defined in ComfyUI, moving from a dictionary-based system to an object-oriented, declarative approach with strong typing.
 
 ## Core Concepts
 
 ### 1. Single Schema Definition
 
-Instead of 7+ separate methods/properties, v3 nodes use a single `DEFINE_SCHEMA()` method:
+Instead of multiple class attributes like `INPUT_TYPES`, `CATEGORY`, etc., v3 nodes define their entire structure within a single `@classmethod` called `define_schema()`. This method returns a `SchemaV3` object, making the node's definition self-contained and explicit.
 
 ```python
-class MyNodeV3(ComfyNodeV3):
+class MyNodeV3(io.ComfyNodeV3):
     @classmethod
-    def DEFINE_SCHEMA(cls):
-        return SchemaV3(
-            node_id="MyNode_v3",
+    def define_schema(cls):
+        return io.SchemaV3(
+            node_id="MyNode_V3",
             display_name="My Node (V3)",
             category="my_category",
-            description="Node description shown as tooltip",
+            description="Node description shown as tooltip.",
             inputs=[...],
             outputs=[...],
             hidden=[...],
@@ -30,19 +30,19 @@ class MyNodeV3(ComfyNodeV3):
 
 ### 2. Typed Input/Output System
 
-All I/O types are now proper classes with type hints:
+All inputs and outputs are defined as instances of classes from the `comfy_api.v3.io` module. This provides strong typing, better IDE support, and a richer set of configuration options directly in the definition.
 
 ```python
 from comfy_api.v3 import io
 
-# Basic types
+# Basic types with configuration
 io.Int.Input("my_int", default=42, min=0, max=100)
-io.Float.Input("my_float", default=1.0, step=0.01)
+io.Float.Input("my_float", default=1.0, step=0.01, display_mode=io.NumberDisplay.slider)
 io.String.Input("text", multiline=True, placeholder="Enter text...")
 io.Boolean.Input("enable", default=True, label_on="Yes", label_off="No")
 io.Combo.Input("mode", options=["a", "b", "c"])
 
-# ComfyUI types
+# Core ComfyUI types
 io.Image.Input("image", optional=True)
 io.Model.Input("model", tooltip="The model to use")
 io.Clip.Input("clip")
@@ -50,14 +50,14 @@ io.Vae.Input("vae")
 io.Conditioning.Input("positive")
 io.Latent.Input("latent")
 
-# Outputs
-io.Image.Output("result", display_name="Output Image")
-io.Int.Output("count")
+# Outputs with unique IDs and display names
+io.Image.Output(id="main_image", display_name="Output Image")
+io.Mask.Output(id="alpha_mask", display_name="Alpha Mask")
 ```
 
-### 3. Stateless Execution
+### 3. Stateless Execution with Class Methods
 
-Nodes are now stateless with class methods:
+Nodes are designed to be stateless. The execution logic is a `@classmethod` called `execute`. Instance-specific data is managed through dedicated context objects.
 
 ```python
 @classmethod
@@ -65,30 +65,38 @@ def execute(cls, image: io.Image.Type, scale: float, **kwargs):
     # Access state via cls.state
     if cls.state.previous_scale != scale:
         cls.state.previous_scale = scale
-        
+
     # Access resources via cls.resources
     model = cls.resources.get(TorchDictFolderFilename("models", "model.pt"))
-    
+
     # Access hidden inputs via cls.hidden
     unique_id = cls.hidden.unique_id
-    
-    # Return using NodeOutput
+
+    # Return a structured output
     return io.NodeOutput(processed_image, ui=ui.PreviewImage(processed_image))
 ```
 
 ### 4. Advanced Features
 
 #### Multi-Type Inputs
+A single input socket can accept multiple, specified types.
 ```python
 io.MultiType.Input("value", types=[io.Image, io.Mask, io.Latent])
 ```
 
 #### Dynamic Inputs
+The UI can dynamically add or remove input sockets based on a template.
 ```python
-io.AutoGrowDynamicInput("images", template_input=io.Image.Input("image"))
+io.AutogrowDynamic.Input(
+    id="images",
+    template_input=io.Image.Input("image"),
+    min=1,  # Require at least one image input
+    max=8   # Allow up to 8 image inputs
+)
 ```
 
 #### Custom Types
+Developers can define their own data types for use in inputs and outputs.
 ```python
 @io.comfytype(io_type="MY_TYPE")
 class MyCustomType:
@@ -109,7 +117,7 @@ Each node instance has access to:
 
 ### 6. UI Output System
 
-Structured UI outputs for frontend:
+Nodes can return structured data for the frontend to render, such as image previews, text, or audio players, directly from the `execute` method.
 
 ```python
 from comfy_api.v3 import ui
@@ -168,7 +176,7 @@ class LoadImageV3(ComfyNodeV3):
     @classmethod
     def DEFINE_SCHEMA(cls):
         return SchemaV3(
-            node_id="LoadImage_v3",
+            node_id="LoadImage",
             display_name="Load Image",
             category="image",
             inputs=[
