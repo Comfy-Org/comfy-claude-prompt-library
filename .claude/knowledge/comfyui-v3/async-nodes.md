@@ -28,7 +28,7 @@ class MyAsyncNode:
         
         return (result,)
     
-    async def VALIDATE_INPUTS(self, value, threshold):
+    async def fingerprint_inputs(self, value, threshold):
         # Async validation (e.g., checking remote service)
         is_valid = await check_remote_validation(value)
         return True if is_valid else "Validation failed"
