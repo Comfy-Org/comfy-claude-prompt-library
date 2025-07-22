@@ -150,6 +150,9 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
      ./setup.sh
      ```
    - The setup script will create a virtual environment, install dependencies, build the initial index, and run a health check
+7. **Install Context7 MCP** (optional but recommended):
+   - Provides official documentation for many libraries via the `/research-with-auto-mcp` command
+   - Install the Context7 MCP server or CLI from its repository and ensure it is running locally when using research commands
 
 ## Creating New Commands
 
