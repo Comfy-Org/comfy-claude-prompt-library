@@ -38,6 +38,7 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 - [`/user:STUDY-comfy-api-architecture`](.claude/commands/research/STUDY-comfy-api-architecture.md) - Load pre-generated architecture overview for Comfy-Org/comfy-api
 - [`/user:STUDY-comfyui-custom-nodes-ecosystem`](.claude/commands/research/STUDY-comfyui-custom-nodes-ecosystem.md) - Analyze ComfyUI custom nodes ecosystem patterns and trends using comprehensive dataset
 - [`/user:STUDY-current-repo`](.claude/commands/research/STUDY-current-repo.md) - Study and analyze current repository structure and architecture
+- [`/user:STUDY-microservices-architecture`](.claude/commands/research/STUDY-microservices-architecture.md) - Reference guide for microservices architecture patterns
 - [`/user:STUDY-node-editor-performance-optimizations`](.claude/commands/research/STUDY-node-editor-performance-optimizations.md) - Absorb performance optimization research for modern graph/canvas libraries
 - [`/user:research-with-auto-mcp`](.claude/commands/research/research-with-auto-mcp.md) - Automatically select and use the best MCP tool for research tasks
 - [`/user:STUDY-knowledge-folder`](.claude/commands/research/STUDY-knowledge-folder.md) - Study all markdown files in a knowledge folder for comprehensive understanding
@@ -90,8 +91,10 @@ Commands are stored in `.claude/commands/` and can be invoked using `/project:co
 
 ### Testing
 
-- [`/user:create-test-plan`](.claude/commands/testing/create-test-plan.md) - Generate comprehensive test plans for features or changes
+- [`/user:analyze-test-failures`](.claude/commands/testing/analyze-test-failures.md) - Analyze test failures with balanced approach to identify test bugs vs implementation bugs
 - [`/user:comprehensive-test-review`](.claude/commands/testing/comprehensive-test-review.md) - Perform thorough review of test suite quality and coverage
+- [`/user:create-test-plan`](.claude/commands/testing/create-test-plan.md) - Generate comprehensive test plans for features or changes
+- [`/user:test-failure-mindset`](.claude/commands/testing/test-failure-mindset.md) - Set proper investigative mindset for analyzing test failures
 
 ### System
 
