@@ -33,6 +33,7 @@ CRITICAL: Before starting ANY new task, you MUST search through your previous co
 2. **Run semantic search**: Use the [claude-code-vector-memory](https://github.com/christian-byrne/claude-code-vector-memory) search tool
    - If installed, run: `[path-to-claude-code-vector-memory]/search.sh "extracted key terms"`
    - Common installation paths: `~/claude-code-vector-memory/`, `~/agents/claude-code-vector-memory/`
+   - Note: The script is in the root directory, not in a `scripts/` subdirectory
 3. **Review results** and identify relevant past work
 4. **Present memory recap** to user showing what related work you've done before
 5. **Ask user** if they want to build on previous approaches or start fresh
