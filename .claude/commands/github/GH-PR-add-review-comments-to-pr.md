@@ -175,7 +175,7 @@ Example: "R 3,5 M 2 make it less critical A check for memory leaks in useEffect"
 
 ## Implementation Guide for Inline Comments
 
-To ensure proper inline review comments (not just one giant comment), the system should:
+To ensure proper inline review comments (not just one giant comment), use the correct GitHub API:
 
 1. **Parse the review comments** into structured data:
 ```javascript
@@ -189,7 +189,7 @@ To ensure proper inline review comments (not just one giant comment), the system
 }
 ```
 
-2. **Generate a review script** that creates individual inline comments:
+2. **Generate a script that creates individual inline comments**:
 ```bash
 #!/bin/bash
 # review_script.sh - Generated for PR #123
@@ -200,35 +200,44 @@ OWNER=$(echo $REPO_INFO | jq -r .owner.login)
 REPO=$(echo $REPO_INFO | jq -r .name)
 PR_NUMBER=123
 
-# Create pending review
-REVIEW_ID=$(gh api \
-  -X POST \
-  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews \
-  -f event='PENDING' \
-  -f body='Code review with inline comments' \
-  --jq '.id')
+# Get the latest commit SHA from the PR
+COMMIT_SHA=$(gh pr view $PR_NUMBER --json commits --jq '.commits[-1].oid')
 
-# Add each comment
-gh api -X POST /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/comments \
-  -f path="src/components/Button.tsx" -f line=42 -f side='RIGHT' \
+# Add inline comments using the correct API endpoint
+gh api \
+  --method POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/comments \
   -f body="**Issue**: Missing null check
 **Severity**: High
-**Suggestion**: Add optional chaining: \`props.onClick?.()\`"
+**Suggestion**: Add optional chaining: \`props.onClick?.()\`" \
+  -f commit_id="$COMMIT_SHA" \
+  -f path="src/components/Button.tsx" \
+  -F line=42 \
+  -f side="RIGHT"
 
-gh api -X POST /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/comments \
-  -f path="src/utils/api.ts" -f line=156 -f side='RIGHT' \
+gh api \
+  --method POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/comments \
   -f body="**Issue**: Potential memory leak
-**Severity**: Medium  
-**Suggestion**: Clear interval in cleanup function"
+**Severity**: Medium
+**Suggestion**: Clear interval in cleanup function" \
+  -f commit_id="$COMMIT_SHA" \
+  -f path="src/utils/api.ts" \
+  -F line=156 \
+  -f side="RIGHT"
 
-# Submit the review
-gh api -X POST /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/events \
-  -f event='COMMENT'
+# Optional: Create a summary review after all inline comments
+gh pr review $PR_NUMBER --comment --body "## Review Summary
+I've added inline comments for specific issues. Overall assessment: needs minor fixes before merging."
 ```
 
 ## Submitting the Review
 
-Once approved, submit using GitHub API for proper inline comments:
+Once approved, submit using the correct GitHub API for inline comments:
 
 ```bash
 # Get repository info
@@ -236,77 +245,103 @@ REPO_INFO=$(gh repo view --json owner,name)
 OWNER=$(echo $REPO_INFO | jq -r .owner.login)
 REPO=$(echo $REPO_INFO | jq -r .name)
 
-# Get the base commit SHA for the PR
-BASE_SHA=$(gh pr view $PR_NUMBER --json baseRefOid -q .baseRefOid)
+# Get the latest commit SHA from the PR
+COMMIT_SHA=$(gh pr view $PR_NUMBER --json commits --jq '.commits[-1].oid')
 
-# Create a pending review
-REVIEW_ID=$(gh api \
-  -X POST \
-  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews \
-  -f event='PENDING' \
-  -f body='See inline comments for detailed feedback.' \
-  --jq '.id')
-
-echo "Created review ID: $REVIEW_ID"
-
-# Function to add inline comment
-add_review_comment() {
+# CORRECT: Create inline comments directly on the PR
+add_pr_comment() {
   local file_path=$1
   local line_number=$2
   local comment_body=$3
   
-  # For line-based comments (simpler approach)
   gh api \
-    -X POST \
-    /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/comments \
+    --method POST \
+    -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    /repos/$OWNER/$REPO/pulls/$PR_NUMBER/comments \
+    -f body="$comment_body" \
+    -f commit_id="$COMMIT_SHA" \
     -f path="$file_path" \
-    -f line=$line_number \
-    -f side='RIGHT' \
-    -f body="$comment_body" || echo "Failed to add comment to $file_path:$line_number"
+    -F line=$line_number \
+    -f side="RIGHT" || echo "Failed to add comment to $file_path:$line_number"
 }
 
-# Example usage - add your actual comments here
-# add_review_comment "src/main.js" 42 "SQL injection vulnerability - use parameterized queries"
-# add_review_comment "src/utils.ts" 156 "Missing error boundary will crash the app"
+# Example usage for inline comments
+add_pr_comment "src/main.js" 42 "SQL injection vulnerability - use parameterized queries"
+add_pr_comment "src/utils.ts" 156 "Missing error boundary will crash the app"
 
-# For position-based comments (more accurate but requires diff analysis)
-# First get the diff with position information
-gh api /repos/$OWNER/$REPO/pulls/$PR_NUMBER/files > pr_files.json
-
-# Add comments based on diff positions
-add_review_comment_by_position() {
-  local file_path=$1
-  local position=$2  # Position in the diff, not line number
-  local comment_body=$3
-  
-  gh api \
-    -X POST \
-    /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/comments \
-    -f path="$file_path" \
-    -f position=$position \
-    -f body="$comment_body"
-}
-
-# Parse your review comments and add them
-# Format: "filename:line_number|comment"
-while IFS='|' read -r location comment; do
-  if [[ "$location" =~ ^(.+):([0-9]+)$ ]]; then
-    file="${BASH_REMATCH[1]}"
-    line="${BASH_REMATCH[2]}"
-    add_review_comment "$file" "$line" "$comment"
-  fi
-done < review_comments.txt
-
-# Submit the review with overall status
+# For multi-line comments, use additional parameters:
 gh api \
-  -X POST \
-  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews/$REVIEW_ID/events \
-  -f event='COMMENT'  # or 'APPROVE' or 'REQUEST_CHANGES'
+  --method POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/comments \
+  -f body="This whole function needs refactoring for better error handling" \
+  -f commit_id="$COMMIT_SHA" \
+  -f path="src/auth.js" \
+  -F start_line=10 \
+  -f start_side="RIGHT" \
+  -F line=25 \
+  -f side="RIGHT"
 
-echo "Review submitted successfully!"
+# Optional: Create a summary review AFTER adding inline comments
+gh pr review $PR_NUMBER --comment --body "## Review Summary
+I've added inline comments for specific issues. Please address them before merging."
 
-# Clean up
-rm -f pr_files.json review_comments.txt
+# Or create a review with approval/changes requested
+gh pr review $PR_NUMBER --approve --body "LGTM with minor suggestions in inline comments"
+# gh pr review $PR_NUMBER --request-changes --body "Please address the inline comments before merging"
+```
+
+### Important API Clarifications
+
+Based on GitHub API documentation:
+
+1. **Direct PR Comments** (`/repos/{owner}/{repo}/pulls/{pull_number}/comments`):
+   - Creates inline comments on specific lines in the diff
+   - Required parameters: `body`, `commit_id`, and either `line` or `position`
+   - Optional: `path`, `side`, `start_line`, `start_side` (for multi-line comments)
+   - Use `-f` for string parameters, `-F` for numeric parameters
+   - These appear as inline diff comments
+
+2. **Reviews** (`/repos/{owner}/{repo}/pulls/{pull_number}/reviews`):
+   - Creates review wrappers (COMMENT, APPROVE, REQUEST_CHANGES)
+   - Contains overall review body/summary
+   - Does NOT directly create inline comments
+   - Reviews and inline comments are separate API operations
+
+3. **Key Point**: The endpoint `/pulls/{pr}/reviews/{review_id}/comments` **does not exist**
+   - This is a common misconception
+   - All inline comments use the direct PR comments endpoint
+
+### Recommended Approach
+
+For most PR reviews with inline comments:
+
+```bash
+#!/bin/bash
+# Get PR and repo info
+PR_NUMBER=$1
+REPO_INFO=$(gh repo view --json owner,name)
+OWNER=$(echo $REPO_INFO | jq -r .owner.login)
+REPO=$(echo $REPO_INFO | jq -r .name)
+COMMIT_SHA=$(gh pr view $PR_NUMBER --json commits --jq '.commits[-1].oid')
+
+# Add inline comments using correct syntax
+gh api \
+  --method POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/comments \
+  -f body="Missing null check - use optional chaining" \
+  -f commit_id="$COMMIT_SHA" \
+  -f path="src/components/Button.tsx" \
+  -F line=42 \
+  -f side="RIGHT"
+
+# Create summary review if needed
+gh pr review $PR_NUMBER --comment --body "## Review Summary
+See inline comments for specific issues. Overall good implementation with minor concerns."
 ```
 
 ## Cleanup Process
