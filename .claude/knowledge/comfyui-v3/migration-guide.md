@@ -4,8 +4,8 @@ This guide helps developers migrate existing v1 nodes to the new v3 schema and t
 
 ## Quick Start: The Core Changes
 
-1.  **Inherit from `io.ComfyNodeV3`**: Your node class now subclasses `io.ComfyNodeV3`.
-2.  **Use `define_schema`**: All metadata (`INPUT_TYPES`, `CATEGORY`, etc.) moves into a single `@classmethod def define_schema(cls)` that returns an `io.SchemaV3` object.
+1.  **Inherit from `io.ComfyNode`**: Your node class now subclasses `io.ComfyNode`.
+2.  **Use `define_schema`**: All metadata (`INPUT_TYPES`, `CATEGORY`, etc.) moves into a single `@classmethod def define_schema(cls)` that returns an `io.Schema` object.
 3.  **Use `execute`**: The main logic function is now always a `@classmethod def execute(cls, ...)` method.
 4.  **Use Typed I/O**: Inputs and outputs are now strongly-typed objects from the `io` module (e.g., `io.Image.Input(...)`).
 5.  **Return `NodeOutput`**: The `execute` method must return an `io.NodeOutput` instance.
@@ -41,10 +41,10 @@ NODE_CLASS_MAPPINGS = {"Canny": Canny}
 ```python
 from comfy_api.v3 import io
 
-class Canny(io.ComfyNodeV3):
+class Canny(io.ComfyNode):
     @classmethod
     def define_schema(cls):
-        return io.SchemaV3(
+        return io.Schema(
             node_id="Canny_V3",
             category="image/preprocessors",
             inputs=[
@@ -69,11 +69,11 @@ This is a critical step for ensuring your V3 node coexists with or replaces the 
 
 1.  **Remove Old Mappings**: Delete the `NODE_CLASS_MAPPINGS` and `NODE_DISPLAY_NAME_MAPPINGS` dictionaries.
 2.  **Create `NODES_LIST`**: Create a new list called `NODES_LIST` and add your V3 class to it.
-3.  **Set `node_id`**: The `node_id` in `SchemaV3` **must** be the key from the old `NODE_CLASS_MAPPINGS`.
+3.  **Set `node_id`**: The `node_id` in `Schema` **must** be the key from the old `NODE_CLASS_MAPPINGS`.
 4.  **Set `display_name` (Conditionally)**:
     -   Check if a key existed in the old `NODE_DISPLAY_NAME_MAPPINGS`.
     -   **If yes**: Set `display_name` to that value.
-    -   **If no**: **Omit** the `display_name` parameter from `SchemaV3` entirely.
+    -   **If no**: **Omit** the `display_name` parameter from `Schema` entirely.
 
 **Example:**
 
@@ -91,7 +91,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
 ```python
 @classmethod
 def define_schema(cls):
-    return io.SchemaV3(
+    return io.Schema(
         node_id="APG_V3", # From MAPPINGS key + "_V3"
         display_name="Adaptive Projected Guidance _V3", # From DISPLAY MAPPINGS value + " _V3"
         # ... other parameters
@@ -102,31 +102,44 @@ NODES_LIST = [APG]  # ... at end of file
 
 ### Step 3: Converting I/O
 
-| V1 Type (`string`) | V3 Class (`io.<Type>`) | Common `Input()` Options (as keyword arguments)                           |
-|:-------------------|:-----------------------|:--------------------------------------------------------------------------|
-| `STRING`           | `io.String`            | `default`, `multiline`, `dynamic_prompts`, `placeholder`                  |
-| `INT`              | `io.Int`               | `default`, `min`, `max`, `step`, `display_mode`, `control_after_generate` |
-| `FLOAT`            | `io.Float`             | `default`, `min`, `max`, `step`, `round`, `display_mode`                  |
-| `BOOLEAN`          | `io.Boolean`           | `default`, `label_on`, `label_off`                                        |
-| `COMBO`            | `io.Combo`             | `options`, `default`, `upload`, `image_folder`, `remote`                  |
-| (custom)           | `io.MultiCombo`        | `options`, `default`, `placeholder`, `chip`                               |
-| `IMAGE`            | `io.Image`             |                                                                           |
-| `MASK`             | `io.Mask`              |                                                                           |
-| `LATENT`           | `io.Latent`            |                                                                           |
-| `CONDITIONING`     | `io.Conditioning`      |                                                                           |
-| `CLIP`             | `io.Clip`              |                                                                           |
-| `VAE`              | `io.Vae`               |                                                                           |
-| `MODEL`            | `io.Model`             |                                                                           |
-| `CONTROL_NET`      | `io.ControlNet`        |                                                                           |
-| `SAMPLER`          | `io.Sampler`           |                                                                           |
-| `SIGMAS`           | `io.Sigmas`            |                                                                           |
-| `GUIDER`           | `io.Guider`            |                                                                           |
-| `CLIP_VISION`      | `io.ClipVision`        |                                                                           |
-| `UPSCALE_MODEL`    | `io.UpscaleModel`      |                                                                           |
-| `AUDIO`            | `io.Audio`             |                                                                           |
-| `VIDEO`            | `io.Video`             |                                                                           |
-| `WEBCAM`           | `io.Webcam`            | `default`, `socketless`                                                   |
-| `*`                | `io.AnyType`           | Used for inputs that can accept any type, like the PreviewAny node.       |
+| V1 Type (`string`)     | V3 Class (`io.<Type>`)  | Common `Input()` Options (as keyword arguments)                           |
+|:-----------------------|:------------------------|:--------------------------------------------------------------------------|
+| `STRING`               | `io.String`             | `default`, `multiline`, `dynamic_prompts`, `placeholder`                  |
+| `INT`                  | `io.Int`                | `default`, `min`, `max`, `step`, `display_mode`, `control_after_generate` |
+| `FLOAT`                | `io.Float`              | `default`, `min`, `max`, `step`, `round`, `display_mode`                  |
+| `BOOLEAN`              | `io.Boolean`            | `default`, `label_on`, `label_off`                                        |
+| `COMBO`                | `io.Combo`              | `options`, `default`, `upload`, `image_folder`, `remote`                  |
+| (custom)               | `io.MultiCombo`         | `options`, `default`, `placeholder`, `chip`                               |
+| `IMAGE`                | `io.Image`              |                                                                           |
+| `MASK`                 | `io.Mask`               |                                                                           |
+| `MESH`                 | `io.Mesh`               |                                                                           |
+| `HOOKS`                | `io.Hooks`              |                                                                           |
+| `HOOK_KEYFRAMES`       | `io.HookKeyframes`      |                                                                           |
+| `LATENT`               | `io.Latent`             |                                                                           |
+| `LATENT_OPERATION`     | `io.LatentOperation`    |                                                                           |
+| `LOAD3D_CAMERA`        | `io.Load3DCamera`       |                                                                           |
+| `LOAD_3D`              | `io.Load3D`             |                                                                           |
+| `LOAD_3D_ANIMATION`    | `io.Load3DAnimation`    |                                                                           |
+| `LOSS_MAP`             | `io.LossMap`            |                                                                           |
+| `LORA_MODEL`           | `io.LoraModel`          |                                                                           |
+| `CONDITIONING`         | `io.Conditioning`       |                                                                           |
+| `CLIP`                 | `io.Clip`               |                                                                           |
+| `CLIP_VISION_OUTPUT`   | `io.ClipVisionOutput`   |                                                                           |
+| `NOISE`                | `io.Noise`              |                                                                           |
+| `VAE`                  | `io.Vae`                |                                                                           |
+| `MODEL`                | `io.Model`              |                                                                           |
+| `CONTROL_NET`          | `io.ControlNet`         |                                                                           |
+| `SAMPLER`              | `io.Sampler`            |                                                                           |
+| `SIGMAS`               | `io.Sigmas`             |                                                                           |
+| `GUIDER`               | `io.Guider`             |                                                                           |
+| `CLIP_VISION`          | `io.ClipVision`         |                                                                           |
+| `UPSCALE_MODEL`        | `io.UpscaleModel`       |                                                                           |
+| `AUDIO`                | `io.Audio`              |                                                                           |
+| `VIDEO`                | `io.Video`              |                                                                           |
+| `VOXEL`                | `io.Voxel`              |                                                                           |
+| `WAN_CAMERA_EMBEDDING` | `io.WanCameraEmbedding` |                                                                           |
+| `WEBCAM`               | `io.Webcam`             | `default`, `socketless`                                                   |
+| `*`                    | `io.AnyType`            | Used for inputs that can accept any type, like the PreviewAny node.       |
 
 #### Advanced Input Types
 
@@ -283,7 +296,7 @@ def execute(cls, model_name):
 ### Basic Async Node
 
 ```python
-class AsyncNodeV3(ComfyNodeV3):
+class AsyncNodeV3(io.ComfyNode):
     @classmethod
     async def execute(cls, image, url):
         # Network request without blocking
@@ -383,12 +396,12 @@ class StringConcatenate():
 ```python
 from comfy_api.v3 import io
 
-class StringConcatenate(io.ComfyNodeV3):
+class StringConcatenate(io.ComfyNode):
     """Concatenates two strings with an optional delimiter between them."""
     
     @classmethod
     def define_schema(cls):
-        return io.SchemaV3(
+        return io.Schema(
             node_id="StringConcatenate",
             display_name="String Concatenate",
             category="utils/string",
