@@ -116,6 +116,54 @@ Output: [Expected output]
 - Maintain consistent citation and reference styles
 - Use the same format for external links and resources
 
+## Command Design Philosophy
+
+### Prefer Claude Commands Over Scripts for Analysis
+When designing automation for complex analysis tasks (like scanning GitHub issues for patterns), prefer Claude commands that leverage natural language understanding over rigid scripts:
+
+- **Scripts with fixed patterns miss context**: Regex and keyword matching can't understand nuance, intent, or read between the lines
+- **Claude commands adapt intelligently**: Natural language processing understands context, assesses complexity, and makes judgment calls
+- **Example - Bounty Scanning**: A script looks for keywords like "canvas" to exclude issues, but Claude understands that "improve canvas button styling" is UI work (suitable) while "optimize canvas rendering pipeline" is core work (not suitable)
+- **Flexible iteration**: Commands can ask clarifying questions and refine analysis based on user feedback
+
+This approach is especially valuable for:
+- Issue triage and classification
+- Code review and quality assessment  
+- Pattern recognition in unstructured data
+- Tasks requiring domain understanding
+
+### Template-Based Analysis Pattern
+When building analysis commands for specific domains, use templates that provide structure while allowing intelligent adaptation:
+
+- **Structured Output Formats**: Define clear report sections while allowing flexible content
+- **Progressive Analysis Depth**: Start simple, add complexity based on findings
+- **Domain Expertise in Role**: Embed specialized knowledge through role prompting
+- **Educational Components**: Include explanations that teach users about the domain
+
+Example from finance domain:
+```markdown
+<role>
+You are a financial analyst specializing in subscription management.
+</role>
+
+<output_format>
+## Executive Summary
+[Key findings in 2-3 sentences]
+
+## Detailed Analysis
+[Flexible sections based on discoveries]
+
+## Recommendations
+[Prioritized, actionable steps]
+</output_format>
+```
+
+This pattern enables:
+- Consistent report structure across analyses
+- Intelligent adaptation to different data scenarios
+- Domain education alongside task completion
+- Progressive enhancement from basic to advanced
+
 ## Quality Checklist
 
 Before finalizing a new command:
@@ -128,3 +176,4 @@ Before finalizing a new command:
 - [ ] Tested the command with various inputs
 - [ ] Documented any new patterns introduced
 - [ ] Ensured backward compatibility with related commands
+- [ ] Considered if natural language analysis would be superior to rigid patterns
