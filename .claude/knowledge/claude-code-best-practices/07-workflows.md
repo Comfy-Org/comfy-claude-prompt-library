@@ -68,6 +68,131 @@ Claude Code can manage many GitHub interactions:
 
 This eliminates the need to remember gh command line syntax while automating routine tasks.
 
+#### Creating High-Quality GitHub Issues
+
+When creating bug reports or feature requests, Claude can follow repository-specific templates:
+
+```bash
+# Fetch and analyze issue templates
+gh api repos/OWNER/REPO/contents/.github/ISSUE_TEMPLATE
+
+# Search for related existing issues to avoid duplicates
+gh issue list --repo OWNER/REPO --search "keywords" --limit 10
+
+# Check recent commits for context
+gh api repos/OWNER/REPO/commits | jq '.[].commit.message' | head -20
+```
+
+**Best practices for issue creation:**
+- Read the repository's issue templates first
+- Search for duplicates or related issues
+- Include specific reproduction steps for bugs
+- Add root cause analysis when applicable
+- Reference related issues/PRs
+- Use appropriate labels from the repository
+
+### Code Review Workflow
+
+Systematic code review prevents critical oversights that surface-level analysis can miss. Use this methodology for thorough PR evaluation:
+
+#### 1. Architecture-First Analysis
+
+Before examining implementation details, check for structural issues:
+
+```bash
+# Check file sizes to spot potential duplication
+wc -l src/**/*.ts | grep -E "(service|composable|util)" | sort -nr
+
+# Find duplicate function patterns
+grep -n "function.*checkVersion\|function.*validate" src/**/*.ts
+
+# Identify import-but-don't-use patterns
+grep -A5 "import.*composable" src/services/*.ts
+```
+
+**Common architectural red flags:**
+- Services reimplementing composable logic
+- Similar file sizes in related modules (suggests duplication)
+- Comments like "simplified versions from..." (admission of duplication)
+- Imports that aren't used in the code
+
+#### 2. Cross-Reference Previous Reviews
+
+Always check if past feedback was addressed:
+
+```bash
+# Find related PRs
+gh pr list --search "related-keyword" --state=closed
+
+# Get previous review comments
+gh api repos/OWNER/REPO/pulls/PREV_PR_NUMBER/comments
+
+# Compare implementations between PRs
+gh pr diff PREV_PR_NUMBER > prev_changes.diff
+gh pr diff CURRENT_PR_NUMBER > current_changes.diff
+```
+
+#### 3. Test Coverage Verification
+
+Ensure new logic has corresponding tests:
+
+```bash
+# Find test files for new services/composables
+find tests* -name "*newService*" -o -name "*newComposable*"
+
+# Check test coverage for specific files
+npm run test:unit -- path/to/newFile.test.ts
+
+# Verify test completeness
+grep -n "describe\|it\|test" tests*/**/*.test.ts | grep newFeature
+```
+
+#### 4. Type Consistency Analysis
+
+Check for fragmented type definitions:
+
+```bash
+# Find similar type definitions across files
+grep -r "interface.*Result\|type.*Conflict" src/
+
+# Check for inconsistent function signatures
+grep -A3 "function.*check.*(" src/**/*.ts
+```
+
+#### 5. Review Quality Checklist
+
+**Critical Questions:**
+- [ ] Are there duplicate functions with different names?
+- [ ] Do services reimplement composable logic?
+- [ ] Are imports actually used?
+- [ ] Do similar files have drastically different sizes?
+- [ ] Are there missing tests for new complex logic?
+- [ ] Were previous review comments addressed?
+
+**Avoid Review Bias:**
+- Don't let good implementation quality mask architectural flaws
+- Check structure before examining code style
+- Question why similar functionality exists in multiple places
+- Verify that complexity is justified
+
+#### 6. GitHub CLI Commands for Thorough Review
+
+```bash
+# Get comprehensive PR data
+gh pr view PR_NUMBER --json title,body,files,additions,deletions,commits
+
+# Analyze file changes
+gh pr diff PR_NUMBER | head -100
+
+# Check for related issues
+gh issue list --search "keyword" --state=open
+
+# Review commit history for context
+gh pr view PR_NUMBER --json commits | jq '.commits[].messageHeadline'
+```
+
+**Pro tip:** When you discover critical issues (like massive code duplication), acknowledge the oversight and perform a complete re-review. Initial review bias toward positive aspects often masks fundamental problems that require immediate attention.
+
 ### Use Claude to work with Jupyter notebooks
 
 Researchers and data scientists at Anthropic use Claude Code to read and write Jupyter notebooks. Claude can interpret outputs, including images, providing a fast way to explore and interact with data. There are no required prompts or workflows, but a workflow we recommend is to have Claude Code and a .ipynb file open side-by-side in VS Code.
